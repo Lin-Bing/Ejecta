@@ -15,6 +15,7 @@
 		3EBC19BE16CECE190036F9F3 /* EJBindingKeyInput.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EBC19BD16CECE190036F9F3 /* EJBindingKeyInput.m */; };
 		3EF00C5916C29360004599A4 /* EJJavaScriptView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EF00C5816C29360004599A4 /* EJJavaScriptView.m */; };
 		5B7B76761619DB9700691910 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B7B76751619DB9700691910 /* CoreText.framework */; };
+		A5CB3E912C14ABCB00E3C6EC /* App in Resources */ = {isa = PBXBuildFile; fileRef = A5CB3E902C14ABCB00E3C6EC /* App */; };
 		B6074FF315F8E41700D987F9 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6074FF215F8E41600D987F9 /* GameKit.framework */; };
 		B607AB67132EA6C300D7C3EA /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B607AB66132EA6C300D7C3EA /* OpenAL.framework */; };
 		B607AC33132EA75F00D7C3EA /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B607AC32132EA75F00D7C3EA /* AudioToolbox.framework */; };
@@ -22,7 +23,6 @@
 		B607AD10132EB52400D7C3EA /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B607AD0F132EB52400D7C3EA /* QuartzCore.framework */; };
 		B608CC831BFDDF4600403582 /* Assets-TV.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B608CC821BFDDF4600403582 /* Assets-TV.xcassets */; };
 		B608CC871BFDE43300403582 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B608CC861BFDE43300403582 /* Assets.xcassets */; };
-		B62436681666851E0046B8C7 /* Ejecta.js in Resources */ = {isa = PBXBuildFile; fileRef = B64CE63F166682700087CF94 /* Ejecta.js */; };
 		B630048916C1A2390036D8D4 /* EJBindingTextMetrics.m in Sources */ = {isa = PBXBuildFile; fileRef = B630048816C1A1960036D8D4 /* EJBindingTextMetrics.m */; };
 		B630048C16CB098D0036D8D4 /* EJClassLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = B630048B16CB09850036D8D4 /* EJClassLoader.m */; };
 		B637065E1A27BD5600F42B90 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = B637065D1A27BD5600F42B90 /* LaunchScreen.xib */; };
@@ -59,7 +59,6 @@
 		B668475C182419A500ABCDF9 /* EJCanvasContextWebGLScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = B668475B182419A500ABCDF9 /* EJCanvasContextWebGLScreen.m */; };
 		B668FCEE1821C08500D4F629 /* EJFontCache.m in Sources */ = {isa = PBXBuildFile; fileRef = B668FCED1821C08500D4F629 /* EJFontCache.m */; };
 		B68037011682A58300833604 /* EJConvertWebGL.m in Sources */ = {isa = PBXBuildFile; fileRef = B68037001682A58200833604 /* EJConvertWebGL.m */; };
-		B68C5B95132E6CD60015092E /* App in Resources */ = {isa = PBXBuildFile; fileRef = B68C5AEF132E6CD60015092E /* App */; };
 		B699669816CC4E6E006B9456 /* EJTextureStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = B699669716CC4E6D006B9456 /* EJTextureStorage.m */; };
 		B699669B16CC55F5006B9456 /* EJSharedTextureCache.m in Sources */ = {isa = PBXBuildFile; fileRef = B699669A16CC55F4006B9456 /* EJSharedTextureCache.m */; };
 		B699669E16CC579E006B9456 /* EJSharedOpenGLContext.m in Sources */ = {isa = PBXBuildFile; fileRef = B699669D16CC579B006B9456 /* EJSharedOpenGLContext.m */; };
@@ -105,9 +104,7 @@
 		B6F11556167BD59D001F1324 /* EJBindingWebGLObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = B6F11555167BD59B001F1324 /* EJBindingWebGLObjects.m */; };
 		B6F463A41636C3FB00FC89C1 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6F463A31636C3FA00FC89C1 /* SystemConfiguration.framework */; };
 		B6F629D116F353C800F16BAC /* EJBindingCanvasStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = B6F629D016F353C700F16BAC /* EJBindingCanvasStyle.m */; };
-		B6F714841BCF126A0082A90F /* App in Resources */ = {isa = PBXBuildFile; fileRef = B68C5AEF132E6CD60015092E /* App */; };
 		B6F714891BCF126A0082A90F /* LaunchScreen-Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = B637065F1A27C15200F42B90 /* LaunchScreen-Logo.png */; };
-		B6F7148B1BCF126A0082A90F /* Ejecta.js in Resources */ = {isa = PBXBuildFile; fileRef = B64CE63F166682700087CF94 /* Ejecta.js */; };
 		B6F714911BCF126A0082A90F /* EJBindingTextMetrics.m in Sources */ = {isa = PBXBuildFile; fileRef = B630048816C1A1960036D8D4 /* EJBindingTextMetrics.m */; };
 		B6F714921BCF126A0082A90F /* EJGLProgram2D.m in Sources */ = {isa = PBXBuildFile; fileRef = B64C87A816B80F410097CD5B /* EJGLProgram2D.m */; };
 		B6F714931BCF126A0082A90F /* EJGLProgram2DRadialGradient.m in Sources */ = {isa = PBXBuildFile; fileRef = B64C87AA16B80F4C0097CD5B /* EJGLProgram2DRadialGradient.m */; };
@@ -204,6 +201,7 @@
 		3EF00C5716C29360004599A4 /* EJJavaScriptView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EJJavaScriptView.h; sourceTree = "<group>"; };
 		3EF00C5816C29360004599A4 /* EJJavaScriptView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EJJavaScriptView.m; sourceTree = "<group>"; };
 		5B7B76751619DB9700691910 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		A5CB3E902C14ABCB00E3C6EC /* App */ = {isa = PBXFileReference; lastKnownFileType = folder; path = App; sourceTree = "<group>"; };
 		B6074FF215F8E41600D987F9 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		B607AB66132EA6C300D7C3EA /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		B607AC32132EA75F00D7C3EA /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -256,7 +254,6 @@
 		B64CE63C166682700087CF94 /* EJTexture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EJTexture.m; sourceTree = "<group>"; };
 		B64CE63D166682700087CF94 /* EJConvert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EJConvert.h; sourceTree = "<group>"; };
 		B64CE63E166682700087CF94 /* EJConvert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EJConvert.m; sourceTree = "<group>"; };
-		B64CE63F166682700087CF94 /* Ejecta.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = Ejecta.js; sourceTree = "<group>"; };
 		B64CE640166682700087CF94 /* EJTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EJTimer.h; sourceTree = "<group>"; };
 		B64CE641166682700087CF94 /* EJTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EJTimer.m; sourceTree = "<group>"; };
 		B64CE647166682700087CF94 /* EJBindingGameCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EJBindingGameCenter.h; sourceTree = "<group>"; };
@@ -285,7 +282,6 @@
 		B668FCED1821C08500D4F629 /* EJFontCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EJFontCache.m; sourceTree = "<group>"; };
 		B68036FF1682A58200833604 /* EJConvertWebGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EJConvertWebGL.h; path = WebGL/EJConvertWebGL.h; sourceTree = "<group>"; };
 		B68037001682A58200833604 /* EJConvertWebGL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EJConvertWebGL.m; path = WebGL/EJConvertWebGL.m; sourceTree = "<group>"; };
-		B68C5AEF132E6CD60015092E /* App */ = {isa = PBXFileReference; lastKnownFileType = folder; path = App; sourceTree = "<group>"; };
 		B699669616CC4E6C006B9456 /* EJTextureStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EJTextureStorage.h; sourceTree = "<group>"; };
 		B699669716CC4E6D006B9456 /* EJTextureStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EJTextureStorage.m; sourceTree = "<group>"; };
 		B699669916CC55F3006B9456 /* EJSharedTextureCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EJSharedTextureCache.h; sourceTree = "<group>"; };
@@ -438,7 +434,6 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				B68C5AEF132E6CD60015092E /* App */,
 				B64CE60E166682700087CF94 /* Source */,
 				B64CE683166682B10087CF94 /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
@@ -525,7 +520,6 @@
 				B64CE63E166682700087CF94 /* EJConvert.m */,
 				B64CE640166682700087CF94 /* EJTimer.h */,
 				B64CE641166682700087CF94 /* EJTimer.m */,
-				B64CE63F166682700087CF94 /* Ejecta.js */,
 				B6E02BBE16D4110600616925 /* EJNonRetainingProxy.h */,
 				B6E02BBF16D4110900616925 /* EJNonRetainingProxy.m */,
 			);
@@ -617,6 +611,7 @@
 		B64CE683166682B10087CF94 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A5CB3E902C14ABCB00E3C6EC /* App */,
 				B608CC861BFDE43300403582 /* Assets.xcassets */,
 				B64CE689166682B10087CF94 /* Info.plist */,
 				B637065D1A27BD5600F42B90 /* LaunchScreen.xib */,
@@ -795,10 +790,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B68C5B95132E6CD60015092E /* App in Resources */,
+				A5CB3E912C14ABCB00E3C6EC /* App in Resources */,
 				B637065E1A27BD5600F42B90 /* LaunchScreen.xib in Resources */,
 				B63706601A27C15200F42B90 /* LaunchScreen-Logo.png in Resources */,
-				B62436681666851E0046B8C7 /* Ejecta.js in Resources */,
 				B608CC871BFDE43300403582 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -807,9 +801,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B6F714841BCF126A0082A90F /* App in Resources */,
 				B6F714891BCF126A0082A90F /* LaunchScreen-Logo.png in Resources */,
-				B6F7148B1BCF126A0082A90F /* Ejecta.js in Resources */,
 				B608CC831BFDDF4600403582 /* Assets-TV.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

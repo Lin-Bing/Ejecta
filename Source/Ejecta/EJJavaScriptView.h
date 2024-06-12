@@ -24,7 +24,7 @@
 #define EJECTA_VERSION @"2.1"
 #define EJECTA_DEFAULT_APP_FOLDER @"App/"
 
-#define EJECTA_BOOT_JS @"../Ejecta.js"
+#define EJECTA_BOOT_JS @"Ejecta.js"
 
 #define EJECTA_SYSTEM_VERSION_LESS_THAN(v) \
 	([UIDevice.currentDevice.systemVersion compare:v options:NSNumericSearch] == NSOrderedAscending)

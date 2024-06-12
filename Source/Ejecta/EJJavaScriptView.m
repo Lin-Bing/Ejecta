@@ -233,9 +233,8 @@ void EJBlockFunctionFinalize(JSObjectRef object) {
 }
 
 - (void)loadScriptAtPath:(NSString *)path {
-	NSString *script = [NSString stringWithContentsOfFile:[self pathForResource:path]
-		encoding:NSUTF8StringEncoding error:NULL];
-	
+    NSString *fullPath = [self pathForResource:path];
+	NSString *script = [NSString stringWithContentsOfFile:fullPath encoding:NSUTF8StringEncoding error:NULL];
 	[self evaluateScript:script sourceURL:path];
 }
 
