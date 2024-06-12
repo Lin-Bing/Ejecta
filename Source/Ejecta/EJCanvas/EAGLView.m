@@ -1,5 +1,11 @@
 #import "EAGLView.h"
 
+/* cp 渲染层
+ 
+ 类：CAEAGLLayer，衔接CoreAnimation
+ 
+ 
+ */
 @implementation EAGLView
 
 + (Class)layerClass {

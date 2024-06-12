@@ -7,6 +7,7 @@ typedef struct {
 	EJJavaScriptView *scriptView;
 } EJClassWithScriptView;
 
+/* cp Ejecta对象属性callback，用于返回关联原生类的js对象，后续创建原生对象 */
 JSValueRef EJGetNativeClass(JSContextRef ctx, JSObjectRef object, JSStringRef propertyNameJS, JSValueRef* exception) {
 	CFStringRef className = JSStringCopyCFString( kCFAllocatorDefault, propertyNameJS );
 	EJJavaScriptView *scriptView = JSObjectGetPrivate(object);
@@ -30,13 +31,16 @@ JSValueRef EJGetNativeClass(JSContextRef ctx, JSObjectRef object, JSStringRef pr
 	return obj ? obj : scriptView->jsUndefined;
 }
 
+/* cp 执行 new Ejecta.xxx()时，创建对应的原生对象 */
 JSObjectRef EJCallAsConstructor(JSContextRef ctx, JSObjectRef constructor, size_t argc, const JSValueRef argv[], JSValueRef* exception) {
 	
+    /* cp 获取关联的类 */
 	// Unpack the class and scriptView from the constructor's private data
 	EJClassWithScriptView *classWithScriptView = (EJClassWithScriptView *)JSObjectGetPrivate(constructor);
 	Class class = classWithScriptView->class;
 	EJJavaScriptView *scriptView = classWithScriptView->scriptView;
 	
+    /* cp 创建原生对象 */
 	// Init the native class and create the JSObject with it
 	EJBindingBase *instance = [(EJBindingBase *)[class alloc] initWithContext:ctx argc:argc argv:argv];
 	JSObjectRef obj = [class createJSObjectWithContext:ctx scriptView:scriptView instance:instance];
@@ -69,25 +73,33 @@ bool EJConstructorHasInstance(JSContextRef ctx, JSObjectRef constructor, JSValue
 
 - (id)initWithScriptView:(EJJavaScriptView *)scriptView name:(NSString *)name {
 	if( self = [super init] ) {
-		JSGlobalContextRef context = scriptView.jsGlobalContext;
-		
+        
+        /* cp 1.创建类
+         当做构造函数调用时，创建对应的原生对象
+         */
+        // 构造函数类
 		// Create the constructor class
 		JSClassDefinition constructorClassDef = kJSClassDefinitionEmpty;
 		constructorClassDef.callAsConstructor = EJCallAsConstructor;
 		constructorClassDef.hasInstance = EJConstructorHasInstance;
 		constructorClassDef.finalize = EJConstructorFinalize;
 		jsConstructorClass = JSClassCreate(&constructorClassDef);
-		
+		// loader类，用于创建Ejecta对象。 通过Ejecta.xxx返回属性时，执行EJGetNativeClass获取NativeClass，中转构造行为到真正的类用于创建原生对象
 		// Create the collection class and attach it to the global context with
 		// the given name
 		JSClassDefinition loaderClassDef = kJSClassDefinitionEmpty;
 		loaderClassDef.getProperty = EJGetNativeClass;
 		JSClassRef loaderClass = JSClassCreate(&loaderClassDef);
 		
+        /* cp 2.在当前上下文的全局对象上创建Ejecta对象 */
+        // 全局上下文
+        JSGlobalContextRef context = scriptView.jsGlobalContext;
+        // 全局对象
 		JSObjectRef global = JSContextGetGlobalObject(context);
-		
+		// 创建对象，关联scriptView
 		JSObjectRef loader = JSObjectMake(context, loaderClass, scriptView);
 		JSStringRef jsName = JSStringCreateWithUTF8CString(name.UTF8String);
+        // 挂载Ejecta对象到全局对象上
 		JSObjectSetProperty(
 			context, global, jsName, loader,
 			(kJSPropertyAttributeDontDelete | kJSPropertyAttributeReadOnly),

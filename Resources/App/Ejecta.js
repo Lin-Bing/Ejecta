@@ -41,6 +41,8 @@ window.navigator = {
 	}
 };
 
+/* cp 默认屏上canvas
+ */
 // Create the default screen canvas
 window.canvas = new Ejecta.Canvas();
 window.canvas.type = 'canvas';
@@ -163,6 +165,8 @@ window.cancelAnimationFrame = function (id) {
 };
 
 
+/* cp 构造函数
+ */
 // The native Image, Audio, HttpRequest and LocalStorage class mimic the real elements
 window.Image = Ejecta.Image;
 window.Audio = Ejecta.Audio;
