@@ -238,6 +238,7 @@ EJ_BIND_FUNCTION(getContext, ctx, argc, argv) {
 		scriptView.screenRenderingContext.style = style;
 	}
 	
+    /* cp 切换上下文为当前上下文 */
 	[EAGLContext setCurrentContext:renderingContext.glContext];
 	[renderingContext create];
 	scriptView.currentRenderingContext = renderingContext;

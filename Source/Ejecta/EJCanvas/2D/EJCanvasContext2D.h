@@ -78,6 +78,7 @@ extern const EJCompositeOperationFunc EJCompositeOperationFuncs[];
 @protocol EJFillable
 @end
 
+/* cp canvas2d状态量 */
 typedef struct {
 	CGAffineTransform transform;
 	
@@ -134,14 +135,17 @@ static inline EJColorRGBA EJCanvasBlendStrokeColor( EJCanvasState *state ) {
 	
 	short bufferWidth, bufferHeight;
 	
+    /* cp 纹理数据 */
 	GLenum textureFilter;
 	EJTexture *currentTexture;
 	EJPath *path;
 	
+    /* cp 顶点数据 */
 	EJVertex *vertexBuffer;
 	int vertexBufferSize;
 	int vertexBufferIndex;
 	
+    /* cp canvas2d状态量，以及栈 */
 	int stateIndex;
 	EJCanvasState stateStack[EJ_CANVAS_STATE_STACK_SIZE];
 	EJCanvasState *state;

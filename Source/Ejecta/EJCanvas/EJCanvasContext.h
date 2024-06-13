@@ -30,6 +30,8 @@
 @property (nonatomic) int msaaSamples;
 @property (nonatomic) short width;
 @property (nonatomic) short height;
+
+/* cp OpenGL ES上下文 */
 @property (nonatomic, readonly) EAGLContext *glContext;
 
 @end

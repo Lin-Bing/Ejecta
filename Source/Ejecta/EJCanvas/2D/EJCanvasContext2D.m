@@ -96,6 +96,13 @@ const EJCompositeOperationFunc EJCompositeOperationFuncs[] = {
 	[super dealloc];
 }
 
+/* cp 初始化全局状态
+ 
+ Framebuffer
+ Renderbuffer
+ 
+ 面剔除、混合、深度测试
+ */
 - (void)create {
 	if( msaaEnabled ) {
 		glGenFramebuffers(1, &msaaFrameBuffer);

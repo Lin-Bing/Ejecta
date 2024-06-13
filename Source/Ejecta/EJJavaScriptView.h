@@ -64,14 +64,17 @@
 	EJClassLoader *classLoader;
 
 	EJTimerCollection *timers;
-	
+    
+    /* cp openGLContext，用于Canvas2D共享 */
 	EJSharedOpenGLContext *openGLContext;
+    /* cp 纹理缓存 */
 	EJSharedTextureCache *textureCache;
 	EJSharedOpenALManager *openALManager;
 	
 	EJCanvasContext *currentRenderingContext;
 	EAGLContext *glCurrentContext;
 	
+    /* cp 渲染循环定时器，也驱动js定时任务 */
 	CADisplayLink *displayLink;
 
 	NSObject<EJWindowEventsDelegate> *windowEventsDelegate;
@@ -87,7 +90,7 @@
 }
 
 @property (nonatomic, copy) NSString *appFolder;
-
+/* cp 退后台暂停渲染 */
 @property (nonatomic, assign) BOOL pauseOnEnterBackground;
 @property (nonatomic, assign, getter = isPaused) BOOL isPaused; // Pauses drawing/updating of the JSView
 /* cp 是否有屏上canvas，第一个创建的就是屏上canvas，后续创建的就是离屏canvas
@@ -95,8 +98,9 @@
 @property (nonatomic, assign) BOOL hasScreenCanvas;
 @property (nonatomic, assign) BOOL exitOnMenuPress;
 @property (nonatomic, readonly) NSTimeInterval startTime;
-
+/* cp JS全局上下文 */
 @property (nonatomic, readonly) JSGlobalContextRef jsGlobalContext;
+
 @property (nonatomic, readonly) EJSharedOpenGLContext *openGLContext;
 
 @property (nonatomic, retain) NSObject<EJWindowEventsDelegate> *windowEventsDelegate;
@@ -109,6 +113,7 @@
 @property (nonatomic, retain) EJCanvasContext<EJPresentable> *screenRenderingContext;
 
 @property (nonatomic, retain) NSOperationQueue *backgroundQueue;
+/* cp 原生对象加载器 */
 @property (nonatomic, retain) EJClassLoader *classLoader;
 
 - (id)initWithFrame:(CGRect)frame appFolder:(NSString *)folder;

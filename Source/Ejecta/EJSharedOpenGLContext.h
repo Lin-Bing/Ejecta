@@ -7,6 +7,10 @@
 // In contrast, WebGL Contexts do not use this class. Each WebGL Context will
 // create its own EAGLContext so it can manage all the OpenGL state itself.
 
+/* cp 共享上下文
+ 用于Canvas2D共享上下文，比如已编译完毕的着色器、顶点数据等
+ WebGL不用这个类，而是创建自己的EAGLContext
+ */
 #import <Foundation/Foundation.h>
 #import "EJGLProgram2D.h"
 #import "EJGLProgram2DRadialGradient.h"
