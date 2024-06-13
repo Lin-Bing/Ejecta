@@ -44,7 +44,9 @@ EJ_BIND_ENUM(globalCompositeOperation, renderingContext.globalCompositeOperation
 	"destination-atop"	// kEJCompositeOperationDestinationAtop
 );
 */
-
+/* cp EJ_BIND_ENUM枚举映射
+ 比如globalCompositeOperation字符串属性，映射到renderingContext.globalCompositeOperation枚举
+ */
 static const char *_globalCompositeOperationEnumNames[] = {
     "source-over", "lighter", "lighten", "darker", "darken", "destination-out", "destination-over", "source-atop", "xor", "copy", "source-in", "destination-in", "source-out", "destination-atop"
 };
@@ -223,6 +225,8 @@ EJ_BIND_SET(globalAlpha, ctx, value) {
 	renderingContext.state->globalAlpha = MIN(1,MAX(JSValueToNumberFast(ctx, value),0));
 }
 */
+/* cp EJ_BIND_GET、EJ_BIND_SET 原生属性setter、getter
+ */
 static JSValueRef _get_globalAlpha( JSContextRef ctx, JSObjectRef object, JSStringRef propertyName, JSValueRef* exception ) {
     id instance = (id)JSObjectGetPrivate(object); 
     return ((JSValueRef(*)(id, SEL, JSContextRef)) objc_msgSend)(instance, @selector(_get_globalAlpha:), ctx);
@@ -424,7 +428,11 @@ EJ_BIND_FUNCTION(getImageData, ctx, argc, argv) {
 	return [EJBindingImageData createJSObjectWithContext:ctx scriptView:scriptView instance:binding];
 }
 */
-
+/* cp EJ_BIND_FUNCTION函数定义
+ 
+ _ptr_to_func_getImageData获取C函数指针
+ _func_getImageDataC函数指针中转给对应的原生函数
+ */
 static JSValueRef _func_getImageData( JSContextRef ctx, JSObjectRef function, JSObjectRef object, size_t argc, const JSValueRef argv[], JSValueRef* exception ) {
     id instance = (id)JSObjectGetPrivate(object);
     JSValueRef ret = ((JSValueRef(*)(id, SEL, JSContextRef, size_t, const JSValueRef [])) objc_msgSend)(instance, @selector(_func_getImageData:argc:argv:), ctx, argc, argv);
@@ -625,6 +633,7 @@ EJ_BIND_FUNCTION(resetClip, ctx, argc, argv) {
 EJ_BIND_FUNCTION_NOT_IMPLEMENTED( isPointInPath );
 */
 
+/* cp EJ_BIND_FUNCTION_NOT_IMPLEMENTED返回Undefined，表示未定义 */
 static JSValueRef _func_isPointInPath( JSContextRef ctx, JSObjectRef function, JSObjectRef object, size_t argc, const JSValueRef argv[], JSValueRef* exception ) {
     static _Bool didShowWarning;
     if( !didShowWarning ) {
