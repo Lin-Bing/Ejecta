@@ -30,6 +30,8 @@
 	EJLoadedJSClass *class = [scriptView.classLoader getJSClass:self];
 	JSObjectRef obj = JSObjectMake( ctx, class.jsClass, NULL );
 	
+    /* cp 把常量添加到js对象
+     */
 	// Attach all constant values to the object. Doing this on instantiation is a bit slower
 	// than just having the callbacks in the StaticProperties, but it makes access to them
 	// much faster because we never have to leave JS land. This is especially important for

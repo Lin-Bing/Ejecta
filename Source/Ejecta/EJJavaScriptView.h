@@ -90,6 +90,8 @@
 
 @property (nonatomic, assign) BOOL pauseOnEnterBackground;
 @property (nonatomic, assign, getter = isPaused) BOOL isPaused; // Pauses drawing/updating of the JSView
+/* cp 是否有屏上canvas，第一个创建的就是屏上canvas，后续创建的就是离屏canvas
+ */
 @property (nonatomic, assign) BOOL hasScreenCanvas;
 @property (nonatomic, assign) BOOL exitOnMenuPress;
 @property (nonatomic, readonly) NSTimeInterval startTime;
@@ -102,6 +104,8 @@
 @property (nonatomic, retain) NSObject<EJDeviceMotionDelegate> *deviceMotionDelegate;
 
 @property (nonatomic, retain) EJCanvasContext *currentRenderingContext;
+/* cp 屏上canvas context
+ */
 @property (nonatomic, retain) EJCanvasContext<EJPresentable> *screenRenderingContext;
 
 @property (nonatomic, retain) NSOperationQueue *backgroundQueue;

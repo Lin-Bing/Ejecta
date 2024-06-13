@@ -152,6 +152,11 @@ EJ_BIND_FUNCTION(getContext, ctx, argc, argv) {
 	EJCanvasContextMode newContextMode = kEJCanvasContextModeInvalid;
 	id contextClass, bindingClass;
 	
+    /* cp context模式
+     
+     contextClass：根据2d、webgl，以及离屏、屏上，获取对应的类
+     cavans本质上就是个纹理，因此这里离屏类型直接命名为Texture
+     */
 	if( [type isEqualToString:@"2d"] ) {
 		newContextMode = kEJCanvasContextMode2D;
 		bindingClass = EJBindingCanvasContext2D.class;
@@ -171,7 +176,8 @@ EJ_BIND_FUNCTION(getContext, ctx, argc, argv) {
 		return NULL;
 	}
 	
-	
+    /* cp 创建过对应mode的context，直接返回
+     */
 	if( contextMode != kEJCanvasContextModeInvalid ) {
 		// Nothing changed? - just return the already created context
 		if( contextMode == newContextMode ) {
@@ -188,9 +194,13 @@ EJ_BIND_FUNCTION(getContext, ctx, argc, argv) {
 	contextMode = newContextMode;
 	scriptView.currentRenderingContext = nil;
 	
+    /* cp 根据contextClass创建context
+     */
 	// Configure and create the Canvas Context
 	renderingContext = [[contextClass alloc] initWithScriptView:scriptView width:width height:height];
 	
+    /* cp 解析context参数
+     */
 	// Parse the options object, if present.
 	// E.g.: {antialias: true, antialiasSamples: 4, preserveDrawingBuffer: true}
 	if( argc > 1 ) {
@@ -198,13 +208,14 @@ EJ_BIND_FUNCTION(getContext, ctx, argc, argv) {
 		if( [optionsObj isKindOfClass:NSDictionary.class] ) {
 			
 			NSDictionary *options = (NSDictionary *)optionsObj;
-			
+            // 缓冲区将不会被清除，会保存下来，直到被清除或被使用者覆盖
 			// Only override the default for preserveDrawingBuffer if this options is not undefined.
 			// For Canvas2D this defaults to true, for WebGL it defaults to false.
 			if( options[@"preserveDrawingBuffer"] ) {
 				renderingContext.preserveDrawingBuffer = [options[@"preserveDrawingBuffer"] boolValue];
 			}
 			
+            // 超级采样抗锯齿，样本数，最小为2
 			// If antialias is enabled, figure out the max samples this hardware supports and
 			// clamp the antialiasSamples to it, if present. Otherwise default to 2 samples.
 			if( [options[@"antialias"] boolValue] ) {
@@ -215,7 +226,7 @@ EJ_BIND_FUNCTION(getContext, ctx, argc, argv) {
 				renderingContext.msaaEnabled = maxSamples > 1;
 				renderingContext.msaaSamples = MAX(2, MIN(maxSamples, msaaSamples));
 			}
-           
+            // 3d表示包含一个alpha缓冲区， 2d表示包含一个alpha通道
 			if ( !([options[@"alpha"] boolValue]) ) {
 					renderingContext.alphaShouldLock = YES;
 			}

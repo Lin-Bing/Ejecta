@@ -125,6 +125,8 @@
 	needsPresenting = NO;
 }
 
+/* cp 获取纹理
+ */
 - (EJTexture *)texture {
 	// This context may not be the current one, but it has to be in order for
 	// glReadPixels to succeed.

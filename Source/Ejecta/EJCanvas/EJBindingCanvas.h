@@ -17,6 +17,8 @@
 
 @class EJJavaScriptView;
 
+/* cp context模式
+ */
 typedef enum {
 	kEJCanvasContextModeInvalid,
 	kEJCanvasContextMode2D,
@@ -39,6 +41,8 @@ typedef enum {
 	EJCanvasImageRendering imageRendering;
 	CGRect style;
 	
+    /* cp 标识：屏上、离屏canvas
+     */
 	BOOL isScreenCanvas;
 }
 

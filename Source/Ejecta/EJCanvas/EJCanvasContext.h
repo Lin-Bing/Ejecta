@@ -3,15 +3,20 @@
 
 #import <Foundation/Foundation.h>
 
+/* cp canvas context基类，存放公用属性
+ */
 @class EAGLContext;
 @interface EJCanvasContext : NSObject {
 	short width, height;
 	
+    /* cp 创建context时js端传入的入参
+     */
 	BOOL preserveDrawingBuffer;
 	BOOL msaaEnabled;
+    int msaaSamples;
 	BOOL alphaShouldLock;
 	BOOL needsPresenting;
-	int msaaSamples;
+    
 	EAGLContext *glContext;
 }
 

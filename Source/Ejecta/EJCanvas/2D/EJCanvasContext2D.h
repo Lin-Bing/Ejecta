@@ -192,6 +192,7 @@ static inline EJColorRGBA EJCanvasBlendStrokeColor( EJCanvasState *state ) {
 	withTransform:(CGAffineTransform)transform;
 - (void)flushBuffers;
 
+#pragma mark - CanvasRenderingContext2D标准接口
 - (void)save;
 - (void)restore;
 - (void)rotate:(float)angle;
