@@ -125,6 +125,8 @@ EJ_BIND_SET(height, ctx, value) {
 	}
 }
 
+/* cp style转发给styleObject
+ */
 EJ_BIND_GET(style, ctx) {
 	return styleObject.jsObject;
 }
@@ -145,6 +147,8 @@ EJ_BIND_GET(offsetHeight, ctx) {
 	return JSValueMakeNumber(ctx, style.size.height ? style.size.height : height);
 }
 
+/* cp 核心方法，获取上下文
+ */
 EJ_BIND_FUNCTION(getContext, ctx, argc, argv) {
 	if( argc < 1 ) { return NULL; };
 	
@@ -154,6 +158,7 @@ EJ_BIND_FUNCTION(getContext, ctx, argc, argv) {
 	
     /* cp context模式
      
+     bindingClass：2d、webgl js对象
      contextClass：根据2d、webgl，以及离屏、屏上，获取对应的类
      cavans本质上就是个纹理，因此这里离屏类型直接命名为Texture
      */
@@ -247,7 +252,8 @@ EJ_BIND_FUNCTION(getContext, ctx, argc, argv) {
 	// rendering context
 	self.imageRendering = imageRendering;
 	
-	
+    /* cp 创建canvas context对应的js对象，附上context对象
+     */
 	// Create the JS object
 	EJBindingBase *binding = [[bindingClass alloc] initWithRenderingContext:(id)renderingContext];
 	jsCanvasContext = [bindingClass createJSObjectWithContext:ctx scriptView:scriptView instance:binding];

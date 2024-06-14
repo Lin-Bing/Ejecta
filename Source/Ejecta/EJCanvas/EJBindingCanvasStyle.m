@@ -2,6 +2,8 @@
 
 #import "EJBindingCanvas.h"
 
+/* cp canvas.style
+ */
 @implementation EJBindingCanvasStyle
 @synthesize binding;
 

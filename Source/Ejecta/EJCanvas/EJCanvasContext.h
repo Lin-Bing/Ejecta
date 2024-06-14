@@ -7,6 +7,7 @@
  */
 @class EAGLContext;
 @interface EJCanvasContext : NSObject {
+    // canvas宽高
 	short width, height;
 	
     /* cp 创建context时js端传入的入参

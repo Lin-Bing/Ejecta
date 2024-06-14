@@ -11,7 +11,8 @@
 #import "EJDrawable.h"
 #import "EJConvertColorRGBA.h"
 
-
+/* cp CanvasContext2D js对象，调用操作都中转给renderingContext
+ */
 @implementation EJBindingCanvasContext2D
 
 - (id)initWithRenderingContext:(EJCanvasContext2D *)renderingContextp {
@@ -45,7 +46,7 @@ EJ_BIND_ENUM(globalCompositeOperation, renderingContext.globalCompositeOperation
 );
 */
 /* cp EJ_BIND_ENUM枚举映射
- 比如globalCompositeOperation字符串属性，映射到renderingContext.globalCompositeOperation枚举
+ 比如context2d的globalCompositeOperation字符串属性，映射到renderingContext.globalCompositeOperation枚举
  */
 static const char *_globalCompositeOperationEnumNames[] = {
     "source-over", "lighter", "lighten", "darker", "darken", "destination-out", "destination-over", "source-atop", "xor", "copy", "source-in", "destination-in", "source-out", "destination-atop"
@@ -331,7 +332,8 @@ EJ_BIND_FUNCTION(translate, ctx, argc, argv) {
 	[renderingContext translateX:x y:y];
 	return NULL;
 }
-
+/* cp 缩放比 2x 或 3x
+ */
 EJ_BIND_FUNCTION(scale, ctx, argc, argv) {
 	EJ_UNPACK_ARGV(float x, float y);
 	[renderingContext scaleX:x y:y];

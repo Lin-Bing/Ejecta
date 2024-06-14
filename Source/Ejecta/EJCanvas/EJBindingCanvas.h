@@ -35,6 +35,7 @@ typedef enum {
 	JSObjectRef jsCanvasContext;
 	EJCanvasContext *renderingContext;
 	EJCanvasContextMode contextMode;
+    // 宽高， 像素大小
 	short width, height;
 	
 	EJBindingCanvasStyle *styleObject;

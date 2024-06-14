@@ -89,6 +89,14 @@ void EJBlockFunctionFinalize(JSObjectRef object) {
     
     // Create the global JS context in its own group, so it can be released properly
     jsGlobalContext = JSGlobalContextCreateInGroup(NULL, NULL);
+    
+    /* cp 支持safari进行js调试
+     
+     iOS16开始，需要手动运行调试
+     详见：https://webkit.org/blog/13936/enabling-the-inspection-of-web-content-in-apps/
+     */
+    JSGlobalContextSetInspectable(jsGlobalContext, true);
+    
     jsUndefined = JSValueMakeUndefined(jsGlobalContext);
     JSValueProtect(jsGlobalContext, jsUndefined);
     
@@ -420,6 +428,7 @@ void EJBlockFunctionFinalize(JSObjectRef object) {
 	[textureCache releaseStoragesOlderThan:5];
 }
 
+/* cp 切换当前上下文 */
 - (void)setCurrentRenderingContext:(EJCanvasContext *)renderingContext {
 	if( renderingContext != currentRenderingContext ) {
 		[currentRenderingContext flushBuffers];

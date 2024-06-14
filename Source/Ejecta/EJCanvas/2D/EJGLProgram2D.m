@@ -7,13 +7,14 @@
 
 - (id)initWithVertexShader:(const char *)vertexShaderSource fragmentShader:(const char *)fragmentShaderSource {
 	if( self = [super init] ) {
+        /* cp 创建、编译、链接着色器 */
 		program = glCreateProgram();
 		GLuint vertexShader = [EJGLProgram2D compileShaderSource:vertexShaderSource type:GL_VERTEX_SHADER];
 		GLuint fragmentShader = [EJGLProgram2D compileShaderSource:fragmentShaderSource type:GL_FRAGMENT_SHADER];
 
 		glAttachShader(program, vertexShader);
 		glAttachShader(program, fragmentShader);
-		
+        /* cp 绑定属性索引 */
 		[self bindAttributeLocations];
 		
 		[EJGLProgram2D linkProgram:program];

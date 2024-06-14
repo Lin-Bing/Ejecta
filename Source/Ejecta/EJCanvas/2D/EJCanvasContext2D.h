@@ -83,6 +83,7 @@ typedef struct {
 	CGAffineTransform transform;
 	
 	EJCompositeOperation globalCompositeOperation;
+    /* cp fillStyle 字符串颜色 */
 	EJColorRGBA fillColor;
 	NSObject<EJFillable> *fillObject;
 	EJColorRGBA strokeColor;

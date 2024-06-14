@@ -100,3 +100,4 @@ ctx.lineWidth = 2;
 
 /* cp 每16ms重绘 */
 setInterval( animate, 16 );
+

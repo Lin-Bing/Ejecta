@@ -7,22 +7,26 @@
 
 #import "EJCanvas2DTypes.h"
 
+/* cp 顶点着色器索引 */
 enum {
 	kEJGLProgram2DAttributePos,
 	kEJGLProgram2DAttributeUV,
 	kEJGLProgram2DAttributeColor,
 };
 
+/* cp context2D 着色器程序 */
 @interface EJGLProgram2D : NSObject {
 	GLuint program;
-	GLuint screen;
+	GLuint screen; /* cp uniform位置 */
 }
 
 - (id)initWithVertexShader:(const char *)vertexShaderSource fragmentShader:(const char *)fragmentShaderSource;
 - (void)bindAttributeLocations;
 - (void)getUniforms;
 
+/* cp 编译着色器 */
 + (GLint)compileShaderSource:(const char *)source type:(GLenum)type;
+/* cp 链接 */
 + (void)linkProgram:(GLuint)program;
 
 @property (nonatomic, readonly) GLuint program;
