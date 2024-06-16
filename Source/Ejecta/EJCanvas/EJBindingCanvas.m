@@ -245,7 +245,7 @@ EJ_BIND_FUNCTION(getContext, ctx, argc, argv) {
 	
     /* cp 切换上下文为当前上下文 */
 	[EAGLContext setCurrentContext:renderingContext.glContext];
-	[renderingContext create];
+	[renderingContext create];/* cp 初始化上下文 */
 	scriptView.currentRenderingContext = renderingContext;
 	
 	// Execute the imageRendering setter again, now that we have a full created

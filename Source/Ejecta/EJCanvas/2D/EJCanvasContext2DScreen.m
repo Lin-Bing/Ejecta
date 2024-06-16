@@ -66,7 +66,7 @@
 		(preserveDrawingBuffer ? @"yes" : @"no")
 	);
 	
-	
+	/* cp 创建渲染表面EAGLView */
 	if( !glview ) {
 		// Create the OpenGL UIView with final screen size and content scaling (retina)
 		glview = [[EAGLView alloc] initWithFrame:frame contentScale:contentScale retainedBacking:preserveDrawingBuffer];
@@ -104,6 +104,7 @@
 	glFinish();
 }
 
+/* cp 上屏，执行presentRenderbuffer把帧缓冲内容绘制到屏幕上 */
 - (void)present {
 	[self flushBuffers];
 	

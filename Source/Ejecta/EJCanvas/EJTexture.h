@@ -19,6 +19,9 @@
 // unpremultiplied, so this class provides some static methods to premultiply
 // and unpremultiply raw pixel data.
 
+
+/* cp 管理纹理，以及纹理数据 */
+
 #import <UIKit/UIKit.h>
 #import <OpenGLES/EAGL.h>
 #import <OpenGLES/ES2/gl.h>
@@ -34,6 +37,7 @@
 	BOOL dimensionsKnown;
 	short width, height;
 	NSString *fullPath;
+    /* cp 纹理 */
 	EJTextureStorage *textureStorage;
 	GLenum format;
 	GLuint fbo;

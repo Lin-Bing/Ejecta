@@ -14,6 +14,7 @@ window.top = window.parent = window;
 // The 'ej' object provides some basic info and utility functions
 var ej = window.ejecta = new Ejecta.GlobalUtils();
 
+/* cp 缩放比，屏幕逻辑宽高 */
 // Set up the screen properties and useragent
 window.devicePixelRatio = ej.devicePixelRatio;
 window.innerWidth = ej.screenWidth;

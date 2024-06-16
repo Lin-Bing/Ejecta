@@ -332,7 +332,7 @@ EJ_BIND_FUNCTION(translate, ctx, argc, argv) {
 	[renderingContext translateX:x y:y];
 	return NULL;
 }
-/* cp 缩放比 2x 或 3x
+/* cp 缩放比 2x 或 3x，影响变换矩阵
  */
 EJ_BIND_FUNCTION(scale, ctx, argc, argv) {
 	EJ_UNPACK_ARGV(float x, float y);
@@ -536,7 +536,7 @@ EJ_BIND_FUNCTION(fill, ctx, argc, argv) {
 	[renderingContext fill:fillRule];
 	return NULL;
 }
-
+/* cp 绘制线条 */
 EJ_BIND_FUNCTION(stroke, ctx, argc, argv) {
 	scriptView.currentRenderingContext = renderingContext;
 	[renderingContext stroke];
@@ -562,6 +562,9 @@ EJ_BIND_FUNCTION(rect, ctx, argc, argv) {
 	return NULL;
 }
 
+/* cp 添加贝塞尔曲线
+⚠️注：底层居然是通过绘制三角形来实现的
+ */
 EJ_BIND_FUNCTION(bezierCurveTo, ctx, argc, argv) {
 	EJ_UNPACK_ARGV(float cpx1, float cpy1, float cpx2, float cpy2, float x, float y);
 	[renderingContext bezierCurveToCpx1:cpx1 cpy1:cpy1 cpx2:cpx2 cpy2:cpy2 x:x y:y];

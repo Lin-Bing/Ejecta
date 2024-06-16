@@ -28,6 +28,7 @@
 	[super dealloc];
 }
 
+/* cp 绑定纹理，设置过滤、环绕 */
 - (void)bindToTarget:(GLenum)target withParams:(EJTextureParam *)newParams {
 	glBindTexture(target, textureId);
 	

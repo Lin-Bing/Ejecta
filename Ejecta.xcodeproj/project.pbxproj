@@ -659,7 +659,6 @@
 				B6F114F11676BD40001F1324 /* EJCanvasContext2DScreen.m */,
 				B6F114F21676BD40001F1324 /* EJCanvasContext2DTexture.h */,
 				B6F114F31676BD40001F1324 /* EJCanvasContext2DTexture.m */,
-				B659D3121A4F6FE300B9AEF9 /* EJCanvasShaders.h */,
 				B664B9891699F3370093E04E /* EJBindingCanvasPattern.h */,
 				B664B98A1699F3380093E04E /* EJBindingCanvasPattern.m */,
 				B664B98C1699F49B0093E04E /* EJCanvasPattern.h */,
@@ -683,6 +682,7 @@
 				B6F115021676BDB3001F1324 /* EJCanvas2DTypes.h */,
 				B6F115041676BE18001F1324 /* EJConvertColorRGBA.h */,
 				B6F115051676BE18001F1324 /* EJConvertColorRGBA.m */,
+				B659D3121A4F6FE300B9AEF9 /* EJCanvasShaders.h */,
 				B64C87A716B80F400097CD5B /* EJGLProgram2D.h */,
 				B64C87A816B80F410097CD5B /* EJGLProgram2D.m */,
 				B64C87A916B80F450097CD5B /* EJGLProgram2DRadialGradient.h */,
@@ -758,7 +758,8 @@
 				LastUpgradeCheck = 0800;
 				TargetAttributes = {
 					1D6058900D05DD3D006BFB54 = {
-						DevelopmentTeam = 74QMX4AH9B;
+						DevelopmentTeam = G6VL4S7BH2;
+						ProvisioningStyle = Automatic;
 					};
 					B6F714811BCF126A0082A90F = {
 						DevelopmentTeam = TYQN4X28QA;
@@ -962,8 +963,10 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				DEVELOPMENT_TEAM = 74QMX4AH9B;
+				DEVELOPMENT_TEAM = G6VL4S7BH2;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -979,6 +982,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.phoboslab.ejecta;
 				PRODUCT_NAME = Ejecta;
 				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

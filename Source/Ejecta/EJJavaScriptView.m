@@ -388,6 +388,7 @@ void EJBlockFunctionFinalize(JSObjectRef object) {
 	// Check all timers
 	[timers update];
 	
+    /* cp 上屏 */
 	// Redraw the canvas
 	self.currentRenderingContext = screenRenderingContext;
 	[screenRenderingContext present];
@@ -399,6 +400,8 @@ void EJBlockFunctionFinalize(JSObjectRef object) {
 	
 	[windowEventsDelegate pause];
 	displayLink.paused = YES;
+    
+    /* cp 退后台时glfinish刷新gl命令，避免后台运行crash */
 	[screenRenderingContext finish];
 
 	[AVAudioSession.sharedInstance setActive:NO error:NULL];

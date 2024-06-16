@@ -7,13 +7,15 @@
 // so many EJVectors to NSValue types seemed wasteful.
 typedef std::vector<EJVector2> points_t;
 typedef struct {
-	points_t points;
+	points_t points;/* cp 表示路径的坐标点集合 */
 	bool isClosed;
 } subpath_t;
 typedef std::vector<subpath_t> path_t;
 
 @interface EJPath() {
+    /* cp 当前路径 */
 	subpath_t currentPath;
+    /* cp 路径集合 */
 	path_t paths;
 }
 @end

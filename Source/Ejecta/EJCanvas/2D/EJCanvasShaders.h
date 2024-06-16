@@ -6,6 +6,8 @@
 
 #define EJ_SHADER_SOURCE(NAME, ...) const char * const NAME = #__VA_ARGS__;
 
+/* cp 顶点着色器源码
+ */
 EJ_SHADER_SOURCE(EJShaderVertex,
 	attribute vec2 pos;
 	attribute vec2 uv;
@@ -24,6 +26,8 @@ EJ_SHADER_SOURCE(EJShaderVertex,
 	}
 );
 
+/* cp fs 透明纹理，取纹理的透明通道，与颜色相乘
+ */
 EJ_SHADER_SOURCE(EJShaderAlphaTexture,
 	varying lowp vec4 vColor;
 	varying highp vec2 vUv;
@@ -35,6 +39,8 @@ EJ_SHADER_SOURCE(EJShaderAlphaTexture,
 	}
 );
 
+/* cp fs， 只有颜色
+ */
 EJ_SHADER_SOURCE(EJShaderFlat,
 	varying lowp vec4 vColor;
 	varying highp vec2 vUv;
@@ -44,6 +50,9 @@ EJ_SHADER_SOURCE(EJShaderFlat,
 	}
 );
 
+/* cp fs，平铺
+ 取模操作可以让纹理循环重复，从而创建出平铺的纹理效果
+ */
 EJ_SHADER_SOURCE(EJShaderPattern,
 	varying lowp vec4 vColor;
 	varying highp vec2 vUv;
@@ -55,6 +64,8 @@ EJ_SHADER_SOURCE(EJShaderPattern,
 	}
 );
 
+/* cp fs 纹理 * 颜色
+ */
 EJ_SHADER_SOURCE(EJShaderTexture,
 	varying lowp vec4 vColor;
 	varying highp vec2 vUv;
@@ -66,6 +77,8 @@ EJ_SHADER_SOURCE(EJShaderTexture,
 	}
 );
 
+/* cp fs 径向渐变???
+ */
 EJ_SHADER_SOURCE(EJShaderRadialGradient,
 	precision highp float;
 

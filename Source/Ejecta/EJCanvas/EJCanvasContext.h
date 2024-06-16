@@ -7,12 +7,12 @@
  */
 @class EAGLContext;
 @interface EJCanvasContext : NSObject {
-    // canvas宽高
+    // canvas带过来的，像素尺寸
 	short width, height;
 	
     /* cp 创建context时js端传入的入参
      */
-	BOOL preserveDrawingBuffer;
+	BOOL preserveDrawingBuffer;/* cp canvas2d默认ture */
 	BOOL msaaEnabled;
     int msaaSamples;
 	BOOL alphaShouldLock;

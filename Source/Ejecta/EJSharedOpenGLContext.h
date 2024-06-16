@@ -31,13 +31,23 @@
 
 + (EJSharedOpenGLContext *)instance;
 
+/* cp 着色器程序，vs都是EJShaderVertex，fs是根据名字
+ Flat 只有颜色
+ Texture 纹理 * 颜色
+ AlphaTexture 纹理透明通道 * 颜色
+ Pattern 平铺
+ RadialGradient 径向渐变???
+ */
 @property (nonatomic, readonly) EJGLProgram2D *programFlat;
 @property (nonatomic, readonly) EJGLProgram2D *programTexture;
 @property (nonatomic, readonly) EJGLProgram2D *programAlphaTexture;
 @property (nonatomic, readonly) EJGLProgram2D *programPattern;
 @property (nonatomic, readonly) EJGLProgram2DRadialGradient *programRadialGradient;
-
+/* cp OpenGL ES上下文
+ */
 @property (nonatomic, readonly) EAGLContext *glContext2D;
+/* cp glContext2D对应的Sharegroup
+ */
 @property (nonatomic, readonly) EAGLSharegroup *glSharegroup;
 @property (nonatomic, readonly) NSMutableData *vertexBuffer;
 

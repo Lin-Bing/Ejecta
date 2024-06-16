@@ -7,6 +7,7 @@
 
 @implementation EJCanvasContext2D
 
+/* cp globalCompositeOperation对应的混合模式 */
 const EJCompositeOperationFunc EJCompositeOperationFuncs[] = {
 	[kEJCompositeOperationSourceOver] = {GL_ONE, GL_ONE_MINUS_SRC_ALPHA, 1},
 	[kEJCompositeOperationLighter] = {GL_ONE, GL_ONE_MINUS_SRC_ALPHA, 0},
@@ -259,9 +260,11 @@ const EJCompositeOperationFunc EJCompositeOperationFuncs[] = {
 	
 	[self flushBuffers];
 	currentProgram = newProgram;
-	
-	glUseProgram(currentProgram.program);
-	glUniform2f(currentProgram.screen, width, height * (upsideDown ? -1 : 1));
+    /* cp upsideDown默认翻转， h为负数, (1179, -2556) */
+    CGFloat w = width;
+    CGFloat h = height * (upsideDown ? -1 : 1);
+    glUseProgram(currentProgram.program);
+	glUniform2f(currentProgram.screen, w, h);
 }
 
 - (void)pushTriX1:(float)x1 y1:(float)y1 x2:(float)x2 y2:(float)y2
@@ -316,7 +319,7 @@ const EJCompositeOperationFunc EJCompositeOperationFuncs[] = {
 	
 	vertexBufferIndex += 6;
 }
-
+/* cp 缓存6个顶点，绘制矩形 */
 - (void)pushRectX:(float)x y:(float)y w:(float)w h:(float)h
 	color:(EJColorRGBA)color
 	withTransform:(CGAffineTransform)transform
@@ -330,6 +333,7 @@ const EJCompositeOperationFunc EJCompositeOperationFuncs[] = {
 	EJVector2 d12 = {x, y+h};
 	EJVector2 d22 = {x+w, y+h};
 	
+    /* cp transform不是单位矩阵，需要相乘，以适配不同缩放比的屏幕 */
 	if( !CGAffineTransformIsIdentity(transform) ) {
 		d11 = EJVector2ApplyTransform( d11, transform );
 		d21 = EJVector2ApplyTransform( d21, transform );
@@ -523,7 +527,7 @@ const EJCompositeOperationFunc EJCompositeOperationFuncs[] = {
 	
 	vertexBufferIndex += 6;
 }
-
+/* cp canvas2d的渲染采用批处理机制，vertexBuffer缓存足够多的三角形顶点数据后再绘制，绘制时机大概有：缓存满了；帧回掉执行；修改了影响渲染的状态量（尺寸、着色器、混合模式）时需要先把存量顶点进行绘制 */
 - (void)flushBuffers {
 	if( vertexBufferIndex == 0 ) { return; }
 	
@@ -639,7 +643,7 @@ const EJCompositeOperationFunc EJCompositeOperationFuncs[] = {
 }
 
 - (void)scaleX:(float)x y:(float)y {
-	state->transform = CGAffineTransformScale( state->transform, x, y );
+	state->transform = CGAffineTransformScale( state->transform, x, y ); /* cp 修改变换矩阵 */
 	path.transform = state->transform;
 }
 
@@ -669,8 +673,7 @@ const EJCompositeOperationFunc EJCompositeOperationFuncs[] = {
 	if( state->fillObject ) {
 		[self pushFilledRectX:x y:y w:w h:h fillable:state->fillObject
 			color:EJCanvasBlendWhiteColor(state) withTransform:state->transform];
-	}
-	else {
+	} else {
 		[self setProgram:sharedGLContext.programFlat];
 		
 		EJColorRGBA cc = EJCanvasBlendFillColor(state);

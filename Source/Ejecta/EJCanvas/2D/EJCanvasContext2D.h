@@ -80,6 +80,7 @@ extern const EJCompositeOperationFunc EJCompositeOperationFuncs[];
 
 /* cp canvas2d状态量 */
 typedef struct {
+    /* cp 变换矩阵 */
 	CGAffineTransform transform;
 	
 	EJCompositeOperation globalCompositeOperation;
@@ -88,8 +89,9 @@ typedef struct {
 	NSObject<EJFillable> *fillObject;
 	EJColorRGBA strokeColor;
 	NSObject<EJFillable> *strokeObject;
+    /* cp 全局透明度 */
 	float globalAlpha;
-	
+	/* cp 线宽 */
 	float lineWidth;
 	EJLineCap lineCap;
 	EJLineJoin lineJoin;
@@ -102,6 +104,8 @@ typedef struct {
 	EJPath *clipPath;	
 } EJCanvasState;
 
+/* cp 根据globalAlpha、globalCompositeOperation，计算最终颜色
+ */
 static inline EJColorRGBA EJCanvasBlendColor( EJCanvasState *state, EJColorRGBA color ) {
 	float alpha = state->globalAlpha * (float)color.rgba.a/255.0f;
 	return (EJColorRGBA){ .rgba = {
@@ -139,9 +143,12 @@ static inline EJColorRGBA EJCanvasBlendStrokeColor( EJCanvasState *state ) {
     /* cp 纹理数据 */
 	GLenum textureFilter;
 	EJTexture *currentTexture;
+    /* cp 线条路径 */
 	EJPath *path;
 	
-    /* cp 顶点数据 */
+    /* cp 顶点数据
+     vertexBufferSize是vertexBuffer的容量，表示可以存放多少个EJVertex，默认32k可以存放1638个
+     */
 	EJVertex *vertexBuffer;
 	int vertexBufferSize;
 	int vertexBufferIndex;
@@ -151,6 +158,8 @@ static inline EJColorRGBA EJCanvasBlendStrokeColor( EJCanvasState *state ) {
 	EJCanvasState stateStack[EJ_CANVAS_STATE_STACK_SIZE];
 	EJCanvasState *state;
 	
+    /* cp 是否翻转，默认为true。
+     因为OpenGL屏幕空间原点是左下角，而canvas2d坐标原点是左上角  */
 	BOOL upsideDown;
 	
 	EJFontCache *fontCache;

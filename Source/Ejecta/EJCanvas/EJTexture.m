@@ -505,7 +505,7 @@ typedef struct {
 	
 	return pixels;
 }
-
+/* cp 图片解码 */
 - (NSMutableData *)loadPixelsFromUIImage:(UIImage *)image {
 	CGImageRef cgImage = image.CGImage;
 	
