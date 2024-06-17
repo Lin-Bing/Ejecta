@@ -23,13 +23,15 @@ var ctx = canvas.getContext('2d');
 ctx.scale(scale, scale);
 
 var animate = function() {
-    
-    
-    
+    ctx.fillStyle = '#0000FF';
+    ctx.fillRect(0,0,w,h);
+    ctx.fillStyle = '#FF0000';
+    ctx.font = "50px";
+    ctx.fillText("Hello world", 50, 90);
 };
 
 /* cp  填充颜色黑色，用于fillRect */
-ctx.fillStyle = '#FFFFFF';
+ctx.fillStyle = '#0000FF';
 ctx.fillRect( 0, 0, w, h );
 
 /* cp 每16ms重绘 */
