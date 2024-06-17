@@ -50,6 +50,7 @@ const EJCompositeOperationFunc EJCompositeOperationFuncs[] = {
 		state->miterLimit = 10;
 		state->textBaseline = kEJTextBaselineAlphabetic;
 		state->textAlign = kEJTextAlignStart;
+        /* cp 默认字体 */
 		state->font = [[EJFontDescriptor descriptorWithName:@"Helvetica" size:10] retain];
 		state->clipPath = nil;
 		

@@ -211,7 +211,7 @@ int EJFontGlyphLayoutSortByTextureIndex(const void *a, const void *b) {
 	glyphInfo->ty = ((txLineY+1) / textureHeight);
 	glyphInfo->tw = (glyphInfo->w / textureWidth) * contentScale,
 	glyphInfo->th = (glyphInfo->h / textureHeight) * contentScale;
-	
+    /* cp 使用CoreGraphics，绘制文字，获取文字纹理 */
 	NSMutableData *pixels = [NSMutableData dataWithLength:pxWidth * pxHeight];
 	
 	CGContextRef context = CGBitmapContextCreate(pixels.mutableBytes, pxWidth, pxHeight, 8, pxWidth, NULL, kCGImageAlphaOnly);

@@ -37,17 +37,20 @@ typedef struct {
 } EJFontGlyphInfo;
 
 typedef struct {
-	unsigned short textureIndex;
-	CGGlyph glyph;
+	unsigned short textureIndex;  /* cp 纹理索引 */
+	CGGlyph glyph;  /* cp 字型 */
 	float xpos;
 	EJFontGlyphInfo *info;
 } EJFontGlyphLayout;
 
 
-
+/* cp EJFontDescriptor
+ 字体描述
+ 作为缓存key受EJFontCache管理
+ */
 @interface EJFontDescriptor : NSObject {
-	NSString *name;
-	float size;
+	NSString *name; /* cp 字体 */
+	float size; /* cp 大小 */
 	NSUInteger hash;
 }
 + (id)descriptorWithName:(NSString *)name size:(float)size;

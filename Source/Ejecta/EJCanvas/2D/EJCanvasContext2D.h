@@ -99,6 +99,7 @@ typedef struct {
 	
 	EJTextAlign textAlign;
 	EJTextBaseline textBaseline;
+    /* cp 字体 */
 	EJFontDescriptor *font;
 	
 	EJPath *clipPath;	

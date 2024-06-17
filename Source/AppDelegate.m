@@ -14,7 +14,7 @@
 	application.idleTimerDisabled = YES;
 	
 	window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
-	[self loadViewControllerWithScriptAtPath:@"index.js"];
+	[self loadViewControllerWithScriptAtPath:@"index2.js"];
 	
 	[window makeKeyAndVisible];
     return YES;

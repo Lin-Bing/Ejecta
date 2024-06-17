@@ -114,7 +114,13 @@ static EJFontCache *fontCache;
 - (void)clear {
 	[fonts removeAllObjects];
 }
-
+/* cp 根据key获取Font
+ 这里是fillText形式，填充
+ 下面应该是stokeText格式，描边
+ 
+ 详见：
+ https://stackoverflow.com/questions/25816847/canvas-context-filltext-vs-context-stroketext
+ */
 - (EJFont *)fontWithDescriptor:(EJFontDescriptor *)desc contentScale:(float)contentScale {
 	EJFontCacheKey *key = [EJFontCacheKey keyWithDescriptor:desc
 		lineWidth:kEJFontCacheKeyLineWidthNoneFilled contentScale:contentScale];
