@@ -15,6 +15,14 @@
 // computing the layout for a string and pushing glyphs to CanvasContext2D.
 // Glyphs are lazily rendered into an atlas. 
 
+/* cp 文字绘制，绘制原理
+
+ 通过CoreText获取字符的属性信息
+ 通过CoreGraphics获取字符的像素数据
+ 把每个字符保存到纹理上，通常是多个字符保存到同一个纹理上，然后通过缓冲保存一批顶点数据后，批量绘制文本
+ 批处理利用EJCanvasContext2D的pushTexturedRectX...
+ */
+
 #import "EJTexture.h"
 #import <CoreText/CoreText.h>
 #import <QuartzCore/QuartzCore.h>
@@ -31,9 +39,9 @@ typedef struct {
 } EJTextMetrics;
 
 typedef struct {
-	float x, y, w, h;
-	unsigned short textureIndex;
-	float tx, ty, tw, th;
+	float x, y, w, h; /* cp 字符的位置、尺寸 */
+	unsigned short textureIndex;/* cp 字符对应的纹理id */
+	float tx, ty, tw, th; /* cp 字符在纹理上的位置、尺寸 */
 } EJFontGlyphInfo;
 
 typedef struct {
@@ -96,7 +104,8 @@ int EJFontGlyphLayoutSortByTextureIndex(const void *a, const void *b);
 	// Core text variables for line layout
 	CGGlyph *glyphsBuffer;
 	CGPoint *positionsBuffer;
-	
+    
+	/* cp 布局信息缓存 */
 	NSCache *layoutCache;
 }
 

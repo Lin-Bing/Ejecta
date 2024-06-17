@@ -537,7 +537,7 @@ typedef struct {
 	else if(pname == GL_TEXTURE_WRAP_S) params[kEJTextureParamWrapS] = param;
 	else if(pname == GL_TEXTURE_WRAP_T) params[kEJTextureParamWrapT] = param;
 }
-
+/* cp 绑定纹理 */
 - (void)bindWithFilter:(GLenum)filter {
 	params[kEJTextureParamMinFilter] = filter;
 	params[kEJTextureParamMagFilter] = filter;

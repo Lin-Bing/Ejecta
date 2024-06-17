@@ -487,7 +487,7 @@ const EJCompositeOperationFunc EJCompositeOperationFuncs[] = {
 		[self pushRectX:x y:y w:w h:h color:transparentBlack withTransform:transform];
 	}
 }
-
+/* cp 缓存纹理的顶点信息 */
 - (void)pushTexturedRectX:(float)x y:(float)y w:(float)w h:(float)h
 	tx:(float)tx ty:(float)ty tw:(float)tw th:(float)th
 	color:(EJColorRGBA)color
