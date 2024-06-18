@@ -17,10 +17,17 @@
 
 /* cp 文字绘制，绘制原理
 
- 通过CoreText获取字符的属性信息
+ 通过CoreText获取字符的属性信息：尺寸位置，上下偏移
  通过CoreGraphics获取字符的像素数据
  把每个字符保存到纹理上，通常是多个字符保存到同一个纹理上，然后通过缓冲保存一批顶点数据后，批量绘制文本
  批处理利用EJCanvasContext2D的pushTexturedRectX...
+ 
+ 
+ 
+ 例如：绘制文本 “Hello world”，文本长度11
+ 抓帧可以看到，会先在一个纹理上绘制所有字符，然后通过一个drawcall绘制66个顶点，即11个字符举行，一次性把这段文本绘制出来
+ 
+ #5 glDrawArrays(GL_TRIANGLES, 0, 66)
  */
 
 #import "EJTexture.h"
