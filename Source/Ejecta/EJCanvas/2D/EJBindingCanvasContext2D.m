@@ -359,7 +359,7 @@ EJ_BIND_FUNCTION(drawImage, ctx, argc, argv) {
 	// correctly treat the case where the currentRenderingContext is the same
 	// as the image being drawn; i.e. a texture canvas drawing into itself.
 	scriptView.currentRenderingContext = renderingContext;
-	
+	/* cp 可渲染对象，可以是：图片EJBindingImage、离屏画布EJBindingCanvas等 */
 	NSObject<EJDrawable> *drawable = (NSObject<EJDrawable> *)JSValueGetPrivate(argv[0]);
 	EJTexture *image = drawable.texture;
 	

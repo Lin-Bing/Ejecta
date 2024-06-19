@@ -59,7 +59,7 @@
 - (void)maybeReleaseStorage;
 
 - (void)ensureMutableKeepPixels:(BOOL)keepPixels forTarget:(GLenum)target;
-
+/* cp 设置纹理数据 */
 - (void)createWithTexture:(EJTexture *)other;
 - (void)createWithPixels:(NSData *)pixels format:(GLenum)format;
 - (void)createWithPixels:(NSData *)pixels format:(GLenum)formatp target:(GLenum)target;

@@ -10,7 +10,7 @@
 }
 
 - (id)initWithWidth:(int)width height:(int)height pixels:(NSMutableData *)pixels;
-
+/* cp 获取图片数据对应的纹理 */
 @property (readonly, nonatomic) EJTexture *texture;
 @property (readonly, nonatomic) int width;
 @property (readonly, nonatomic) int height;

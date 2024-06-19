@@ -18,6 +18,7 @@
 - (void)createWithJSObject:(JSObjectRef)obj scriptView:(EJJavaScriptView *)view {
 	[super createWithJSObject:obj scriptView:view];
 	
+    /* cp 第一个创建的canvas是屏上canvas */
 	// If we don't have a screen canvas yet, make it this one
 	if( !scriptView.hasScreenCanvas ) {
 		isScreenCanvas = YES;
@@ -47,7 +48,7 @@
 	
 	[super dealloc];
 }
-
+/* cp 获取画布对应的纹理，直接去上下文获取 */
 - (EJTexture *)texture {
 	if( [renderingContext respondsToSelector:@selector(texture)] ) {
 		return (EJTexture *)[(id)renderingContext texture];

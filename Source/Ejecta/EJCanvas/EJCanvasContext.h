@@ -17,7 +17,7 @@
     int msaaSamples;
 	BOOL alphaShouldLock;
 	BOOL needsPresenting;
-    
+    /* cp 上下文 */
 	EAGLContext *glContext;
 }
 

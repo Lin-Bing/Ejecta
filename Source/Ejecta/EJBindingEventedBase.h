@@ -49,7 +49,10 @@ typedef struct {
 } JSEventProperty;
 	
 @interface EJBindingEventedBase : EJBindingBase {
+    /* cp 观察者，用于addEventListener，多个 */
 	NSMutableDictionary *eventListeners; // for addEventListener
+    
+    /* cp 回调函数，用于setter，只有一个 */
 	NSMutableDictionary *onCallbacks; // for on* setters
 }
 
@@ -61,7 +64,7 @@ typedef struct {
 
 @end
 
-
+/* cp 带回掉函数类型的属性，通过这个基类管理回调 */
 
 @interface EJBindingEvent : EJBindingBase {
 	NSString *type;

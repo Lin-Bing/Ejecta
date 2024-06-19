@@ -21,7 +21,7 @@
 		width, height,
 		(msaaEnabled ? [NSString stringWithFormat:@"yes (%d samples)", msaaSamples] : @"no")
 	);
-	
+	/* cp 创建纹理，作为离屏画布的渲染表面，即离屏帧缓冲的颜色附件，因为后面需要采样，因此食用纹理 */
 	// Release previous texture if any, create the new texture and set it as
 	// the rendering target for this framebuffer
 	[texture release];
@@ -33,7 +33,7 @@
 	
 	[self resetFramebuffer];
 }
-
+/* cp 离屏canvas，渲染到屏上canvas时，取出当前帧缓冲的纹理附件 */
 - (EJTexture *)texture {
 	// If this texture Canvas uses MSAA, we need to resolve the MSAA first,
 	// before we can use the texture for drawing.
@@ -54,7 +54,7 @@
 	if( scriptView.currentRenderingContext == self ) {
 		return [self getImageDataSx:0 sy:0 sw:width sh:height].texture;
 	}
-	
+	/* cp 普通情况，直接返回纹理附件 */
 	// Just use the framebuffer texture directly
 	else {
 		return texture;

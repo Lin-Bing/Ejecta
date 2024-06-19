@@ -99,7 +99,7 @@ const EJCompositeOperationFunc EJCompositeOperationFuncs[] = {
 }
 
 /* cp 初始化全局状态
- 
+ 创建缓冲
  Framebuffer
  Renderbuffer
  
@@ -663,7 +663,7 @@ const EJCompositeOperationFunc EJCompositeOperationFuncs[] = {
 	
 	float tw = texture.width;
 	float th = texture.height;
-	
+	/* cp 绑定着色器、纹理，设置顶点缓冲 */
 	[self setProgram:sharedGLContext.programTexture];
 	[self setTexture:texture];
 	[self pushTexturedRectX:dx y:dy w:dw h:dh tx:sx/tw ty:sy/th tw:sw/tw th:sh/th

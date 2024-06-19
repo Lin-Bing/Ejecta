@@ -121,7 +121,24 @@ EJ_BIND_GET(complete, ctx ) {
 	return JSValueMakeBoolean(ctx, (texture && (texture.lazyLoaded || texture.textureId)) );
 }
 
-EJ_BIND_EVENT(load);
+//EJ_BIND_EVENT(load);
+static JSValueRef _get_onload( JSContextRef ctx, JSObjectRef object, JSStringRef propertyName, JSValueRef* exception ) {
+    EJBindingEventedBase *instance = (EJBindingEventedBase*)JSObjectGetPrivate(object);
+    return [instance getCallbackWithType:( @ "load") ctx:ctx];
+}
++ (void *)_ptr_to_get_onload {
+    return (void *)&_get_onload;
+}
+
+static _Bool _set_onload( JSContextRef ctx, JSObjectRef object, JSStringRef propertyName, JSValueRef value, JSValueRef* exception ) {
+    EJBindingEventedBase *instance = (EJBindingEventedBase*)JSObjectGetPrivate(object);
+    /* cp 存储callback js函数对象 */
+    [instance setCallbackWithType:( @ "load") ctx:ctx callback:value];
+    return 1;
+}
++ (void *)_ptr_to_set_onload { return (void *)&_set_onload; };
+
+
 EJ_BIND_EVENT(error);
 
 EJ_BIND_CONST(nodeName, "IMG");

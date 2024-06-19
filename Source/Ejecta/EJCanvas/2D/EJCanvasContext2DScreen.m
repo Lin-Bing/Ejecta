@@ -80,7 +80,7 @@
 		glview.contentScaleFactor = contentScale;
 		glview.layer.contentsScale = contentScale;
 	}
-	
+	/* cp 创建渲染缓冲作为颜色附件 */
 	// Set up the renderbuffer
 	glBindRenderbuffer(GL_RENDERBUFFER, viewRenderBuffer);
 	[glContext renderbufferStorage:GL_RENDERBUFFER fromDrawable:(CAEAGLLayer *)glview.layer];

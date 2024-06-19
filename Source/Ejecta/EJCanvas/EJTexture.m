@@ -118,7 +118,7 @@ typedef struct {
 		
 		
 		loadCallback = [NSBlockOperation new];
-		
+		/* cp 异步线程，做图片加载、解码，解码完毕后，填充数据到纹理 */
 		// Load the image file in a background thread
 		[queue addOperationWithBlock:^{
 			NSMutableData *pixels = [self loadPixelsFromPath:path];
@@ -128,7 +128,7 @@ typedef struct {
 			// benefits - the main bottleneck is loading the image file.
 			[loadCallback addExecutionBlock:^{
 				if( pixels ) {
-					[self createWithPixels:pixels format:GL_RGBA];
+					[self createWithPixels:pixels format:GL_RGBA];/* cp 填充数据 */
 				}
 				[loadCallback release];
 				loadCallback = nil;
@@ -346,7 +346,7 @@ typedef struct {
 		? GL_TEXTURE_BINDING_2D
 		: GL_TEXTURE_BINDING_CUBE_MAP;
 	glGetIntegerv(bindingName, &boundTexture);
-	
+	/* cp 设置纹理数据 */
 	if( isCompressed ) {
 		[self uploadCompressedPixels:pixels target:target];
 	}
