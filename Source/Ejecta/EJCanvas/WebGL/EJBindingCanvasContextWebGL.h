@@ -27,6 +27,7 @@
 
 #define EJ_BIND_CONST_GL(NAME) EJ_BIND_CONST(NAME, GL_##NAME)
 
+/* cp 纹理单元 */
 typedef struct {
 	EJTexture *texture;
 	JSObjectRef jsTexture;
@@ -38,11 +39,14 @@ typedef struct {
 @interface EJBindingCanvasContextWebGL : EJBindingBase {
 	
 	BOOL unpackFlipY;
+    /* cp 预乘透明度 */
 	BOOL premultiplyAlpha;
 	
 	JSObjectRef jsCanvas;
+    /* cp webgl context */
 	EJCanvasContextWebGL *renderingContext;
 	
+    /* cp 存放各种gl对象 */
 	NSMutableDictionary *renderbuffers;
 	NSMutableDictionary *framebuffers;
 	NSMutableDictionary *buffers;

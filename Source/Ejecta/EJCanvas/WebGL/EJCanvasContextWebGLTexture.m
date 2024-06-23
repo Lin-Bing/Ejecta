@@ -26,7 +26,8 @@
 	
 	glBindFramebuffer(GL_FRAMEBUFFER, viewFrameBuffer);
 	glBindRenderbuffer(GL_RENDERBUFFER, viewRenderBuffer);
-	
+    
+	/* cp 创建纹理，用于离屏帧缓冲的颜色附件，绘制内容到纹理上，后续在上屏 */
 	// Release previous texture if any, create the new texture and set it as
 	// the rendering target for this framebuffer
 	[texture release];

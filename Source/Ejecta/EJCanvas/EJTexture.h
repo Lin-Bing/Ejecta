@@ -45,6 +45,7 @@
 	EJTextureParams params;
 	NSBlockOperation *loadCallback;
 }
+/* cp 用于WebGL纹理，不创建textureStorage */
 - (id)initEmptyForWebGL;
 - (id)initWithPath:(NSString *)path;
 + (id)cachedTextureWithPath:(NSString *)path loadOnQueue:(NSOperationQueue *)queue callback:(NSOperation *)callback;

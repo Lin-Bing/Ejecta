@@ -431,7 +431,9 @@ void EJBlockFunctionFinalize(JSObjectRef object) {
 	[textureCache releaseStoragesOlderThan:5];
 }
 
-/* cp 切换当前上下文 */
+/* cp 切换当前上下文
+疑问？：因为OpenGL ES指令必须作用特定EAGLContext上下文上，因此执行任何指令之前，都必须检查上下文是否一致，不一致则需要切换
+ */
 - (void)setCurrentRenderingContext:(EJCanvasContext *)renderingContext {
 	if( renderingContext != currentRenderingContext ) {
 		[currentRenderingContext flushBuffers];

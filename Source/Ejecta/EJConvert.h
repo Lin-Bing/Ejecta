@@ -35,6 +35,7 @@ double JSValueToNumberFast( JSContextRef ctx, JSValueRef v );
 void JSValueUnprotectSafe( JSContextRef ctx, JSValueRef v );
 JSValueRef NSObjectToJSValue( JSContextRef ctx, NSObject *obj );
 NSObject *JSValueToNSObject( JSContextRef ctx, JSValueRef value );
+/* cp 获取arraybuffer，指针传递 */
 void *JSValueGetTypedArrayPtr( JSContextRef ctx, JSValueRef value, size_t *length );
 
 static inline void *JSValueGetPrivate(JSValueRef v) {

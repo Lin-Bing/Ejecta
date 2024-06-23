@@ -545,7 +545,7 @@ typedef struct {
 }
 
 - (void)bindToTarget:(GLenum)target {
-	EJ_ENSURE_LAZY_LOADED_STORAGE();
+	EJ_ENSURE_LAZY_LOADED_STORAGE();/* cp 疑问：懒加载？ */
 	[textureStorage bindToTarget:target withParams:params];
 }
 

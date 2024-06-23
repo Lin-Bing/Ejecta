@@ -66,6 +66,7 @@
 
 
 @implementation EJBindingWebGLShader
+/* cp 失效gl对象，并从集合中移除 */
 - (void)invalidate {
 	[webglContext deleteShader:index];
 	[super invalidate];

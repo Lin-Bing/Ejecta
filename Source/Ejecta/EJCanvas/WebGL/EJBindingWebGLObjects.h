@@ -10,12 +10,16 @@
 #import "EJBindingCanvasContextWebGL.h"
 #import "EJTexture.h"
 
+/* cp EJBindingWebGLObject
+ webgl对象对应的js对象，主要是保存对象id，和context
+ */
 @interface EJBindingWebGLObject : EJBindingBase {
 	GLuint index;
 	EJBindingCanvasContextWebGL *webglContext;
 }
 - (id)initWithWebGLContext:(EJBindingCanvasContextWebGL *)webglContext index:(GLuint)index;
 - (void)invalidate;
+/* cp 获取js对象对应的webgl对象id */
 + (GLint)indexFromJSValue:(JSValueRef)value;
 + (EJBindingWebGLObject *)webGLObjectFromJSValue:(JSValueRef)value;
 + (JSObjectRef)createJSObjectWithContext:(JSContextRef)ctx
@@ -36,7 +40,7 @@
 @interface EJBindingWebGLShader : EJBindingWebGLObject
 @end
 
-
+/* cp webgl纹理对象，封装了EJTexture */
 @interface EJBindingWebGLTexture : EJBindingWebGLObject {
 	EJTexture *texture;
 }

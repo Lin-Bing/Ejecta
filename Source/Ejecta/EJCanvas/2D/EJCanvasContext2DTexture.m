@@ -21,7 +21,7 @@
 		width, height,
 		(msaaEnabled ? [NSString stringWithFormat:@"yes (%d samples)", msaaSamples] : @"no")
 	);
-	/* cp 创建纹理，作为离屏画布的渲染表面，即离屏帧缓冲的颜色附件，因为后面需要采样，因此食用纹理 */
+	/* cp 创建纹理，作为离屏画布的渲染表面，即离屏帧缓冲的颜色附件，因为后面需要采样，因此使用纹理 */
 	// Release previous texture if any, create the new texture and set it as
 	// the rendering target for this framebuffer
 	[texture release];

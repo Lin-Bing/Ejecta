@@ -70,6 +70,8 @@
 	[super dealloc];
 }
 
+#pragma mark - 公有方法
+
 - (void)deleteBuffer:(GLuint)buffer {
 	NSNumber *key = @(buffer);
 	if( buffers[key] ) {
@@ -137,6 +139,7 @@
 	}
 }
 
+#pragma mark - JS API
 
 EJ_BIND_GET(drawingBufferWidth, ctx) {
 	return JSValueMakeNumber(ctx, renderingContext.width);
@@ -310,7 +313,7 @@ EJ_BIND_FUNCTION(bindTexture, ctx, argc, argv) {
 		JSValueUnprotectSafe(ctx, activeTexture->jsTexture);
 		
 		if( texture ) {
-			[texture bindToTarget:target];
+			[texture bindToTarget:target];/* cp 懒加载 */
 			JSValueProtect(ctx, argv[1]);
 			
 			activeTexture->jsTexture = (JSObjectRef)argv[1];
@@ -346,7 +349,23 @@ EJ_BIND_FUNCTION_DIRECT(blendColor, glBlendColor, red, green, blue, alpha);
 EJ_BIND_FUNCTION_DIRECT(blendEquation, glBlendEquation, mode);
 EJ_BIND_FUNCTION_DIRECT(blendEquationSeparate, glBlendEquationSeparate, modeRGB, modeAlpha);
 EJ_BIND_FUNCTION_DIRECT(blendFunc, glBlendFunc, sfactor, dfactor);
-EJ_BIND_FUNCTION_DIRECT(blendFuncSeparate, glBlendFuncSeparate, srcRGB, dstRGB, srcAlpha, dstAlpha);
+//EJ_BIND_FUNCTION_DIRECT(blendFuncSeparate, glBlendFuncSeparate, srcRGB, dstRGB, srcAlpha, dstAlpha);
+/* cp EJ_BIND_FUNCTION_DIRECT,解析参数，并自动调用gl指令 */
+static JSValueRef _func_blendFuncSeparate( JSContextRef ctx, JSObjectRef function, JSObjectRef object, size_t argc, const JSValueRef argv[], JSValueRef* exception ) {
+    id instance = (id)JSObjectGetPrivate(object);
+    JSValueRef ret = ((JSValueRef(*)(id, SEL, JSContextRef, size_t, const JSValueRef [])) objc_msgSend)(instance, @selector(_func_blendFuncSeparate:argc:argv:), ctx, argc, argv);
+    return ret ? ret : ((EJBindingBase *)instance)->scriptView->jsUndefined;
+}
++ (void *)_ptr_to_func_blendFuncSeparate {
+    return (void *)&_func_blendFuncSeparate;
+}
+- (JSValueRef)_func_blendFuncSeparate:(JSContextRef)ctx argc:(size_t)argc argv:(const JSValueRef [])argv {
+    if( argc < 4 ) { return ((void*)0); }
+    scriptView.currentRenderingContext = renderingContext;
+    glBlendFuncSeparate( JSValueToNumberFast(ctx, argv[0]) , JSValueToNumberFast(ctx, argv[0 +1]) , JSValueToNumberFast(ctx, argv[0 +1 +1]) , JSValueToNumberFast(ctx, argv[0 +1 +1 +1]) );
+    return ((void*)0);
+};
+
 
 EJ_BIND_FUNCTION(bufferData, ctx, argc, argv) {
 	if( argc < 3 ) { return NULL; }
@@ -363,7 +382,7 @@ EJ_BIND_FUNCTION(bufferData, ctx, argc, argv) {
 	}
 	else {
 		size_t byteLength = 0;
-		const GLvoid *buffer = JSValueGetTypedArrayPtr(ctx, argv[1], &byteLength);
+		const GLvoid *buffer = JSValueGetTypedArrayPtr(ctx, argv[1], &byteLength);/* cp 获取arraybuffer，指针传递，js到navite无需拷贝 */
 		if( buffer ) {
 			glBufferData(target, byteLength, buffer, usage);
 		}
@@ -408,10 +427,28 @@ EJ_BIND_FUNCTION(clear, ctx, argc, argv) {
 EJ_BIND_FUNCTION_DIRECT(clearColor, glClearColor, red, green, blue, alpha);
 EJ_BIND_FUNCTION_DIRECT(clearDepth, glClearDepthf, depth);
 EJ_BIND_FUNCTION_DIRECT(clearStencil, glClearStencil, s);
+//EJ_BIND_FUNCTION(colorMask, ctx, argc, argv) {
+//    if (argc != 4) { return NULL; }
+//    
+//    EJ_UNPACK_ARGV(GLboolean red, GLboolean green, GLboolean blue, GLboolean alpha);
+//    
+//    if ([renderingContext alphaShouldLock]) {
+//        alpha = GL_FALSE;
+//    }
+//    
+//    glColorMask(red, green, blue, alpha);
+//}
 EJ_BIND_FUNCTION(colorMask, ctx, argc, argv) {
     if (argc != 4) { return NULL; }
-    
-    EJ_UNPACK_ARGV(GLboolean red, GLboolean green, GLboolean blue, GLboolean alpha);
+    /* cp EJ_UNPACK_ARGV，自动解析参数 */
+//    EJ_UNPACK_ARGV(GLboolean red, GLboolean green, GLboolean blue, GLboolean alpha);
+    if( argc < 4 +0 ) {
+        return ((void*)0);
+    }
+    GLboolean red = JSValueToNumberFast(ctx, argv[0]) ;
+    GLboolean green = JSValueToNumberFast(ctx, argv[0 +1]) ;
+    GLboolean blue = JSValueToNumberFast(ctx, argv[0 +1 +1]) ;
+    GLboolean alpha = JSValueToNumberFast(ctx, argv[0 +1 +1 +1]);
     
     if ([renderingContext alphaShouldLock]) {
         alpha = GL_FALSE;
@@ -431,7 +468,19 @@ EJ_BIND_FUNCTION(compileShader, ctx, argc, argv) {
 }
 
 EJ_BIND_FUNCTION_NOT_IMPLEMENTED(compressedTexImage2D);
-EJ_BIND_FUNCTION_NOT_IMPLEMENTED(compressedTexSubImage2D);
+//EJ_BIND_FUNCTION_NOT_IMPLEMENTED(compressedTexSubImage2D);
+/* cp EJ_BIND_FUNCTION_NOT_IMPLEMENTED 空实现 */
+static JSValueRef _func_compressedTexSubImage2D( JSContextRef ctx, JSObjectRef function, JSObjectRef object, size_t argc, const JSValueRef argv[], JSValueRef* exception ) {
+    static _Bool didShowWarning;
+    if( !didShowWarning ) {
+        NSLog(@"Warning: method " @ "compressedTexSubImage2D" @" is not yet implemented!");
+        didShowWarning = 1;
+    }
+    id instance = (id)JSObjectGetPrivate(object);
+    return ((EJBindingBase *)instance)->scriptView->jsUndefined;
+}
++ (void *)_ptr_to_func_compressedTexSubImage2D { return (void *)&_func_compressedTexSubImage2D; };
+
 
 EJ_BIND_FUNCTION(copyTexImage2D, ctx, argc, argv) {
 	EJ_UNPACK_ARGV(GLenum target, GLint level, GLenum internalformat, GLint x, GLint y, GLsizei width, GLsizei height);
@@ -529,7 +578,7 @@ EJ_BIND_FUNCTION(createShader, ctx, argc, argv) {
 	EJ_UNPACK_ARGV(GLenum type);
 	
 	scriptView.currentRenderingContext = renderingContext;
-
+    /* cp 创建着色器，包装为js对象 */
 	GLuint shader = glCreateShader(type);
 	JSObjectRef obj = [EJBindingWebGLShader createJSObjectWithContext:ctx
 		scriptView:scriptView webglContext:self index:shader];
@@ -550,6 +599,70 @@ EJ_BIND_FUNCTION_DIRECT(cullFace, glCullFace, mode);
 	EJ_MAP(EJ_BIND_DELETE_OBJECT, Buffer, Framebuffer, Renderbuffer, Shader, Texture, Program);
 
 #undef EJ_BIND_DELETE_OBJECT
+
+
+/* cp EJ_BIND_DELETE_OBJECT上面是定义了以下几个js api
+ 
+ - (JSValueRef)_func_deleteBuffer:(JSContextRef)ctx
+                             argc:(size_t)argc
+                             argv:(const JSValueRef[])argv {
+   if (argc < 1) {
+     return ((void *)0);
+   }
+   [[EJBindingWebGLObject webGLObjectFromJSValue:argv[0]] invalidate];
+   return ((void *)0);
+ }
+ 
+ - (JSValueRef)_func_deleteFramebuffer:(JSContextRef)ctx
+                                  argc:(size_t)argc
+                                  argv:(const JSValueRef[])argv {
+   if (argc < 1) {
+     return ((void *)0);
+   }
+   [[EJBindingWebGLObject webGLObjectFromJSValue:argv[0]] invalidate];
+   return ((void *)0);
+ }
+ 
+ - (JSValueRef)_func_deleteRenderbuffer:(JSContextRef)ctx
+                                   argc:(size_t)argc
+                                   argv:(const JSValueRef[])argv {
+   if (argc < 1) {
+     return ((void *)0);
+   }
+   [[EJBindingWebGLObject webGLObjectFromJSValue:argv[0]] invalidate];
+   return ((void *)0);
+ }
+ 
+ - (JSValueRef)_func_deleteShader:(JSContextRef)ctx
+                             argc:(size_t)argc
+                             argv:(const JSValueRef[])argv {
+   if (argc < 1) {
+     return ((void *)0);
+   }
+   [[EJBindingWebGLObject webGLObjectFromJSValue:argv[0]] invalidate];
+   return ((void *)0);
+ }
+ 
+ - (JSValueRef)_func_deleteTexture:(JSContextRef)ctx
+                              argc:(size_t)argc
+                              argv:(const JSValueRef[])argv {
+   if (argc < 1) {
+     return ((void *)0);
+   }
+   [[EJBindingWebGLObject webGLObjectFromJSValue:argv[0]] invalidate];
+   return ((void *)0);
+ }
+ 
+ - (JSValueRef)_func_deleteProgram:(JSContextRef)ctx
+                              argc:(size_t)argc
+                              argv:(const JSValueRef[])argv {
+   if (argc < 1) {
+     return ((void *)0);
+   }
+   [[EJBindingWebGLObject webGLObjectFromJSValue:argv[0]] invalidate];
+   return ((void *)0);
+ };
+ */
 
 
 EJ_BIND_FUNCTION_DIRECT(depthFunc, glDepthFunc, func);
@@ -1243,6 +1356,66 @@ EJ_BIND_FUNCTION_DIRECT(hint, glHint, target, mode);
 
 #undef EJ_BIND_IS_OBJECT
 
+/* cp EJ_BIND_IS_OBJECT，定义了下面几个js api
+
+ - (JSValueRef)_func_isBuffer:(JSContextRef)ctx
+                         argc:(size_t)argc
+                         argv:(const JSValueRef[])argv {
+   if (argc < 1) {
+     return ((void *)0);
+   }
+   scriptView.currentRenderingContext = renderingContext;
+   GLuint index = [EJBindingWebGLBuffer indexFromJSValue:argv[0]];
+   return JSValueMakeBoolean(ctx, glIsBuffer(index));
+ }
+ 
+ - (JSValueRef)_func_isFramebuffer:(JSContextRef)ctx
+                              argc:(size_t)argc
+                              argv:(const JSValueRef[])argv {
+   if (argc < 1) {
+     return ((void *)0);
+   }
+   scriptView.currentRenderingContext = renderingContext;
+   GLuint index = [EJBindingWebGLFramebuffer indexFromJSValue:argv[0]];
+   return JSValueMakeBoolean(ctx, glIsFramebuffer(index));
+ }
+ 
+ - (JSValueRef)_func_isProgram:(JSContextRef)ctx
+                          argc:(size_t)argc
+                          argv:(const JSValueRef[])argv {
+   if (argc < 1) {
+     return ((void *)0);
+   }
+   scriptView.currentRenderingContext = renderingContext;
+   GLuint index = [EJBindingWebGLProgram indexFromJSValue:argv[0]];
+   return JSValueMakeBoolean(ctx, glIsProgram(index));
+ }
+ 
+ - (JSValueRef)_func_isRenderbuffer:(JSContextRef)ctx
+                               argc:(size_t)argc
+                               argv:(const JSValueRef[])argv {
+   if (argc < 1) {
+     return ((void *)0);
+   }
+   scriptView.currentRenderingContext = renderingContext;
+   GLuint index = [EJBindingWebGLRenderbuffer indexFromJSValue:argv[0]];
+   return JSValueMakeBoolean(ctx, glIsRenderbuffer(index));
+ }
+ 
+ - (JSValueRef)_func_isShader:(JSContextRef)ctx
+                         argc:(size_t)argc
+                         argv:(const JSValueRef[])argv {
+   if (argc < 1) {
+     return ((void *)0);
+   }
+   scriptView.currentRenderingContext = renderingContext;
+   GLuint index = [EJBindingWebGLShader indexFromJSValue:argv[0]];
+   return JSValueMakeBoolean(ctx, glIsShader(index));
+ };
+ 
+ */
+
+
 EJ_BIND_FUNCTION(isEnabled, ctx, argc, argv) {
 	EJ_UNPACK_ARGV(GLenum cap);
 	return JSValueMakeBoolean(ctx, glIsEnabled(cap));
@@ -1399,7 +1572,7 @@ EJ_BIND_FUNCTION(texImage2D, ctx, argc, argv) {
 	// If this texture already has a texture id remember it, so we can remove it later
 	// if it gets a new one
 	GLint oldTextureId = targetTexture.textureId;
-	
+	/* cp 通过Image, Canvas or ImageDat对象填充纹理 */
 	// With EJDrawable (Image, Canvas or ImageData)
 	if( argc == 6) {
 		EJ_UNPACK_ARGV_OFFSET(3, GLenum format, GLenum type);
@@ -1453,7 +1626,7 @@ EJ_BIND_FUNCTION(texImage2D, ctx, argc, argv) {
 		
 		[sourceTexture maybeReleaseStorage];
 	}
-	
+	/* cp 通过ArrayBufferView填充纹理 */
 	// With NULL or ArrayBufferView
 	else if( argc == 9 ) {
 		EJ_UNPACK_ARGV_OFFSET(3, GLsizei width, GLsizei height, GLint border, GLenum format, GLenum type);
@@ -1692,7 +1865,37 @@ EJ_BIND_FUNCTION(texParameteri, ctx, argc, argv) {
 	EJ_BIND_UNIFORM(1i, x);
 	EJ_BIND_UNIFORM(2i, x, y);
 	EJ_BIND_UNIFORM(3i, x, y, z);
-	EJ_BIND_UNIFORM(4i, x, y, z, w);
+//	EJ_BIND_UNIFORM(4i, x, y, z, w);
+/* cp EJ_BIND_UNIFORM */
+static JSValueRef _func_uniform4i(JSContextRef ctx, JSObjectRef function,
+                                  JSObjectRef object, size_t argc,
+                                  const JSValueRef argv[],
+                                  JSValueRef *exception) {
+  id instance = (id)JSObjectGetPrivate(object);
+  JSValueRef ret = ((JSValueRef(*)(id, SEL, JSContextRef, size_t,
+                                   const JSValueRef[]))objc_msgSend)(
+      instance, @selector(_func_uniform4i:argc:argv:), ctx, argc, argv);
+  return ret ? ret : ((EJBindingBase *)instance)->scriptView->jsUndefined;
+}
++ (void *)_ptr_to_func_uniform4i {
+  return (void *)&_func_uniform4i;
+}
+- (JSValueRef)_func_uniform4i:(JSContextRef)ctx
+                         argc:(size_t)argc
+                         argv:(const JSValueRef[])argv {
+  if (argc < 4 + 1) {
+    return ((void *)0);
+  }
+  scriptView.currentRenderingContext = renderingContext;
+  GLuint uniform = [EJBindingWebGLUniformLocation indexFromJSValue:argv[0]];
+  glUniform4i(uniform, JSValueToNumberFast(ctx, argv[1]),
+              JSValueToNumberFast(ctx, argv[1 + 1]),
+              JSValueToNumberFast(ctx, argv[1 + 1 + 1]),
+              JSValueToNumberFast(ctx, argv[1 + 1 + 1 + 1]));
+  return ((void *)0);
+};
+
+
 
 #undef EJ_BIND_UNIFORM
 
@@ -1721,6 +1924,36 @@ EJ_BIND_FUNCTION(texParameteri, ctx, argc, argv) {
 
 #undef EJ_BIND_UNIFORM_V
 
+/* cp EJ_BIND_UNIFORM_V(4iv, 4, GLint) 定义如下js api
+ 
+ glUniform4i和glUniform4iv区别是
+ 
+ 传递4个int分量
+ void glUniform4i(GLint location, GLint v0, GLint v1, GLint v2, GLint v3);
+ glUniform4i(location, 1, 2, 3, 4);
+
+ 传递包含4个int分量的数组，可以包含多个4分量
+ void glUniform4iv(GLint location, GLsizei count, const GLint *value);
+ GLint values[4] = {1, 2, 3, 4};
+ glUniform4iv(location, 1, values);
+ 
+ - (JSValueRef)_func_uniform4iv:(JSContextRef)ctx
+                           argc:(size_t)argc
+                           argv:(const JSValueRef[])argv {
+   if (argc < 2) {
+     return ((void *)0);
+   }
+   GLuint uniform = [EJBindingWebGLUniformLocation indexFromJSValue:argv[0]];
+   GLsizei count;
+   GLint *values = JSValueToGLintArray(ctx, argv[1], 4, &count);
+   if (values) {
+     scriptView.currentRenderingContext = renderingContext;
+     glUniform4iv(uniform, count, values);
+   }
+   return ((void *)0);
+ };
+ */
+
 
 #define EJ_BIND_UNIFORM_MATRIX_V(NAME, LENGTH, TYPE) \
 	EJ_BIND_FUNCTION(uniformMatrix##NAME, ctx, argc, argv) { \
@@ -1742,6 +1975,23 @@ EJ_BIND_FUNCTION(texParameteri, ctx, argc, argv) {
 
 #undef EJ_BIND_UNIFORM_MATRIX_V
 
+/* cp EJ_BIND_UNIFORM_MATRIX_V(4fv, 16, GLfloat); 定义如下js api
+ - (JSValueRef)_func_uniformMatrix4fv:(JSContextRef)ctx
+                                 argc:(size_t)argc
+                                 argv:(const JSValueRef[])argv {
+   if (argc < 3) {
+     return ((void *)0);
+   }
+   GLuint uniform = [EJBindingWebGLUniformLocation indexFromJSValue:argv[0]];
+   GLboolean transpose = JSValueToNumberFast(ctx, argv[1]);
+   GLsizei count;
+   GLfloat *values = JSValueToGLfloatArray(ctx, argv[2], 16, &count);
+   if (values) {
+     scriptView.currentRenderingContext = renderingContext;
+     glUniformMatrix4fv(uniform, count, transpose, values);
+   }
+   return ((void *)0);
+ }; */
 
 EJ_BIND_FUNCTION(useProgram, ctx, argc, argv) {
 	if ( argc < 1 ) { return NULL; }
@@ -1768,7 +2018,22 @@ EJ_BIND_FUNCTION_DIRECT(vertexAttrib1f, glVertexAttrib1f, index, x);
 EJ_BIND_FUNCTION_DIRECT(vertexAttrib2f, glVertexAttrib2f, index, x, y);
 EJ_BIND_FUNCTION_DIRECT(vertexAttrib3f, glVertexAttrib3f, index, x, y, z);
 EJ_BIND_FUNCTION_DIRECT(vertexAttrib4f, glVertexAttrib4f, index, x, y, z, w);
-
+/* cp EJ_BIND_FUNCTION_DIRECT(vertexAttrib4f, glVertexAttrib4f, index, x, y, z, w); 定义如下js api
+ - (JSValueRef)_func_vertexAttrib4f:(JSContextRef)ctx
+                               argc:(size_t)argc
+                               argv:(const JSValueRef[])argv {
+   if (argc < 5) {
+     return ((void *)0);
+   }
+   scriptView.currentRenderingContext = renderingContext;
+   glVertexAttrib4f(JSValueToNumberFast(ctx, argv[0]),
+                    JSValueToNumberFast(ctx, argv[0 + 1]),
+                    JSValueToNumberFast(ctx, argv[0 + 1 + 1]),
+                    JSValueToNumberFast(ctx, argv[0 + 1 + 1 + 1]),
+                    JSValueToNumberFast(ctx, argv[0 + 1 + 1 + 1 + 1]));
+   return ((void *)0);
+ };
+ */
 
 #define EJ_BIND_VERTEXATTRIB_V(NAME, LENGTH, TYPE) \
 	EJ_BIND_FUNCTION(vertexAttrib##NAME, ctx, argc, argv) { \
@@ -1789,6 +2054,25 @@ EJ_BIND_FUNCTION_DIRECT(vertexAttrib4f, glVertexAttrib4f, index, x, y, z, w);
 	EJ_BIND_VERTEXATTRIB_V(4fv, 4, GLfloat);
 
 #undef EJ_BIND_VERTEXATTRIB_V
+
+/* cp EJ_BIND_VERTEXATTRIB_V(4fv, 4, GLfloat); 定义如下js api
+ - (JSValueRef)_func_vertexAttrib4fv:(JSContextRef)ctx
+                                argc:(size_t)argc
+                                argv:(const JSValueRef[])argv {
+   if (argc < 2) {
+     return ((void *)0);
+   }
+   GLuint index = JSValueToNumberFast(ctx, argv[0]);
+   GLsizei count;
+   GLfloat *values = JSValueToGLfloatArray(ctx, argv[1], 4, &count);
+   if (values) {
+     scriptView.currentRenderingContext = renderingContext;
+     glVertexAttrib4fv(index, values);
+   }
+   return ((void *)0);
+ };
+ */
+
 
 
 EJ_BIND_FUNCTION(vertexAttribPointer, ctx, argc, argv) {
@@ -1816,6 +2100,12 @@ EJ_BIND_FUNCTION_DIRECT(viewport, glViewport, x, y, width, height);
 EJ_BIND_CONST_GL(DEPTH_BUFFER_BIT);
 EJ_BIND_CONST_GL(STENCIL_BUFFER_BIT);
 EJ_BIND_CONST_GL(COLOR_BUFFER_BIT);
+
+/* cp EJ_BIND_CONST_GL(DEPTH_BUFFER_BIT); 定义如下常量
+ + (NSObject *)_const_DEPTH_BUFFER_BIT {
+     return @(GL_DEPTH_BUFFER_BIT);
+ }
+ */
 
 // Boolean
 EJ_BIND_CONST_GL(FALSE);
@@ -2200,6 +2490,12 @@ EJ_BIND_CONST(STENCIL_INDEX, GL_DEPTH_STENCIL_OES);
 EJ_BIND_CONST(STENCIL_INDEX8, GL_DEPTH_STENCIL_OES);
 
 EJ_BIND_CONST(DEPTH_STENCIL, GL_DEPTH_STENCIL_OES);
+
+/* cp EJ_BIND_CONST(DEPTH_STENCIL, GL_DEPTH_STENCIL_OES);
+ + (NSObject *)_const_DEPTH_STENCIL {
+     return @(GL_DEPTH_STENCIL_OES);
+ }
+ */
 
 EJ_BIND_CONST_GL(RENDERBUFFER_WIDTH);
 EJ_BIND_CONST_GL(RENDERBUFFER_HEIGHT);

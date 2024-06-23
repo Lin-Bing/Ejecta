@@ -65,7 +65,8 @@
 		(msaaEnabled ? [NSString stringWithFormat:@"yes (%d samples)", msaaSamples] : @"no"),
 		(preserveDrawingBuffer ? @"yes" : @"no")
 	);
-	
+    
+	/* cp 创建渲染表面EAGLView，用于绘制内容到屏幕上 */
 	if( !glview ) {
 		// Create the OpenGL UIView with final screen size and content scaling (retina)
 		glview = [[EAGLView alloc] initWithFrame:frame contentScale:contentScale retainedBacking:preserveDrawingBuffer];

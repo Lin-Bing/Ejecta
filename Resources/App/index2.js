@@ -23,8 +23,13 @@ var ctx = canvas.getContext('2d');
 ctx.scale(scale, scale);
 
 
+/* cp  填充颜色 */
+ctx.fillStyle = '#0000FF';
+ctx.fillRect( 0, 0, w, h );
 
-/* cp 绘制文本  */
+
+
+/* cp 1. 绘制文本  */
 var animate = function() {
     ctx.fillStyle = '#0000FF';
     ctx.fillRect(0,0,w,h);
@@ -37,7 +42,8 @@ var animate = function() {
 
 
 
-/* cp 绘制图片 */
+
+/* cp 2.绘制图片 */
 const image = new Image();
 image.src = "https://webglfundamentals.org/webgl/resources/leaves.jpg";
 image.load = function(){
@@ -53,12 +59,9 @@ image.addEventListener("load", (e) => {
 
 
 
-/* cp  填充颜色 */
-ctx.fillStyle = '#0000FF';
-ctx.fillRect( 0, 0, w, h );
 
 
-/* cp 绘制离屏画布 */
+/* cp 3.绘制离屏画布 */
 // 创建离屏 canvas 元素
 const offscreenCanvas = document.createElement('canvas');
 const offscreenContext = offscreenCanvas.getContext('2d');
